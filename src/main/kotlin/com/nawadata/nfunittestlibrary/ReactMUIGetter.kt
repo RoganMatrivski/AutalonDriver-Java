@@ -4,7 +4,6 @@ import com.nawadata.nfunittestlibrary.reactmui.TextboxInput
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import javax.xml.soap.Text
 
 class ReactMUIGetter(
     private val driver: WebDriver,
