@@ -9,7 +9,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="NFUnitTestLibraryTester" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
