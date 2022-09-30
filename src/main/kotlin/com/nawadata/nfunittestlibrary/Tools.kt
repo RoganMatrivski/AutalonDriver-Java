@@ -12,8 +12,11 @@ import java.util.concurrent.ThreadLocalRandom
 import java.util.stream.Stream
 import kotlin.math.abs
 
+@Suppress("unused")
 object Tools {
     private val rand = kotlin.random.Random
+    @JvmStatic fun getVersion(): String = Tools.javaClass.`package`.implementationVersion
+
     @JvmStatic fun xpathToLower(attribute: String) = String.format(
         "translate(%s, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')", attribute
     )
