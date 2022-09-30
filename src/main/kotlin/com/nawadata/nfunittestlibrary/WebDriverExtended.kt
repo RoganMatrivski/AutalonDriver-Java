@@ -94,4 +94,8 @@ class   WebDriverExtended (
             true
         }
     }
+
+    fun setWindowDimension(width: Int, height: Int) {
+        driver.manage().window().size = org.openqa.selenium.Dimension(width, height)
+    }
 }
