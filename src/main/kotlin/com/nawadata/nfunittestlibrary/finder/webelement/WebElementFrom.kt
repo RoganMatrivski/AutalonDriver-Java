@@ -55,4 +55,9 @@ class WebElementFrom(
         else
             Tools.getElementContainingString(string, by, tag)
     )
+
+    fun byXPath(
+        xpath: String
+    ) = WebElementGetter(
+        driver, By.xpath(xpath))
 }

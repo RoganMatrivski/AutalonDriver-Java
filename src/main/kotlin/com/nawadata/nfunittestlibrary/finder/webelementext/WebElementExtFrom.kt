@@ -77,4 +77,9 @@ class WebElementExtFrom(
         else
             Tools.getElementContainingString(string, by, tag)
     )
+
+    fun byXPath(
+        xpath: String
+    ) = WebElementExtGetter(
+        driver, driverExt, By.xpath(xpath))
 }
