@@ -9,7 +9,11 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+    inputs:
+      tag-input:
+        description: Tag to test publish to
+        required: false
+        type: string
 
 jobs:
   build:
@@ -80,4 +84,40 @@ jobs:
           branch: main
           commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
           file_pattern: CHANGELOG.md
+
+  test_package:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.tag-input != ''
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache gradle
+        id: cache-gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Package Gradle build
+        run: ./gradlew tasks publishJAR
+
+      - name: Update CHANGELOG
+        id: changelog
+        uses: Requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ github.event.inputs.tag-input }}
+
+      - name: Release if it's a tag
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: true
+          fail_on_unmatched_files: true
+          body: ${{ steps.changelog.outputs.changes }}
+          draft: true
+          files: build/libs/AutalonDriver-*-full.jar
           
