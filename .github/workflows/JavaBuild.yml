@@ -29,6 +29,21 @@ jobs:
       - name: Execute Gradle build
         run: ./gradlew build
 
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache gradle
+        id: cache-gradle
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Package Gradle build
         if: startsWith(github.ref, 'refs/tags/')
         run: ./gradlew tasks publishJAR
