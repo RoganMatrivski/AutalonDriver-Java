@@ -65,6 +65,7 @@ class WebElementExtFrom(
             Tools.getElementContainingString(string, by, tag)
         )
 
+    @JvmOverloads
     fun byString(
         string: String,
         by: Enums.ByOption = Enums.ByOption.Text,
