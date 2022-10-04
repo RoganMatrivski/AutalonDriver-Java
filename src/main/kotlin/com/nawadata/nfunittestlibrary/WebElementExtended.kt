@@ -14,6 +14,14 @@ class WebElementExtended(
 
     fun getWebElement() = webElement!!
 
+    fun highlightAndGetElement(): WebElement {
+        driverExt.jsExecutor.executeScript("arguments[0].style.border='3px solid red'", webElement!!)
+        return webElement
+    }
+
+    fun click() = highlightAndGetElement().click()
+    fun sendKeys(str: String) = highlightAndGetElement().sendKeys(str)
+
     fun shouldBe() = ShouldBe(driver, driverExt, webElement!!) // If there's no webElement, just throw exception
 
     fun getInputFromLabel(label: String): WebElementExtended {
