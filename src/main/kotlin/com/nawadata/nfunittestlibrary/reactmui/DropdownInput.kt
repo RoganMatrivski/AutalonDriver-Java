@@ -11,15 +11,15 @@ class DropdownInput (
     private val driver: WebDriver,
     private val driverExt: WebDriverExtended,
     private val element: WebElement,
-    private val componentId: String = element.getAttribute("data-componentid"),
-) : BasicInputClass(
-    driver,
+    private val componentId: String = element.getAttribute("for"),
+    ) : BasicInputClass(
+        driver,
     driverExt,
     element,
-    element.getAttribute("data-componentid")
+    element.getAttribute("for")
 ) {
     private val options: List<WebElement>
-        get() = driver.findElements(By.xpath("//ul[@id = '$componentId-picker-listEl']/li"))
+        get() = driver.findElements(By.xpath("//ul[@id = '$componentId-popup']/li"))
 
     private fun pickOption(index: Int): WebElement {
         val options = options
@@ -39,12 +39,16 @@ class DropdownInput (
     }
 
     fun selectRandomElement(): DropdownInput {
-        driver.findElement(By.id("$componentId-trigger-picker")).click()
+        element.findElement(By.xpath(
+            "following::*[" +
+                    Tools.xpathInexactContains("@class", "endAdornment") +
+                    "]/button[@title = 'Open']"))
+            .click()
         var tries = 5
 
         while (tries-- > 0) {
             try {
-                driverExt.waitUntilVisible(By.id("$componentId-picker-listEl"))
+                driverExt.waitUntilVisible(By.id("$componentId-popup"))
                 val selectedOption = pickOption(-1)
                 selectedOption.click()
                 break
@@ -55,13 +59,17 @@ class DropdownInput (
     }
 
     fun selectElementOnIndex(index: Int): DropdownInput {
-        driver.findElement(By.id("$componentId-trigger-picker")).click()
+        element.findElement(By.xpath(
+            "following::*[" +
+                    Tools.xpathInexactContains("@class", "endAdornment") +
+                    "]/button[@title = 'Open']"))
+            .click()
 
         var tries = 5
 
         while (tries-- > 0) {
             try {
-                driverExt.waitUntilVisible(By.id("$componentId-picker-listEl"))
+                driverExt.waitUntilVisible(By.id("$componentId-popup"))
                 val selectedOption = pickOption(index)
                 driverExt.scrollToElement(selectedOption)
                 selectedOption.click()
@@ -74,7 +82,11 @@ class DropdownInput (
 
     fun clearInput(): DropdownInput {
         try {
-            driver.findElement(By.id("$componentId-trigger-_trigger1")).click()
+            element.findElement(By.xpath(
+                "following::*[" +
+                        Tools.xpathInexactContains("@class", "endAdornment") +
+                        "]/button[@title = 'Clear']"))
+                .click()
         } catch (e: Exception) {
             //TODO: handle exception
         }
@@ -83,16 +95,20 @@ class DropdownInput (
 
     // TODO: Add Exact variant 
     fun selectElementFromText(text: String): DropdownInput {
-        driver.findElement(By.id("$componentId-trigger-picker")).click()
+        element.findElement(By.xpath(
+            "following::*[" +
+                    Tools.xpathInexactContains("@class", "endAdornment") +
+                    "]/button[@title = 'Open']"))
+            .click()
 
         var tries = 5
 
         while (tries-- > 0) {
             try {
-                driverExt.waitUntilVisible(By.id("$componentId-picker-listEl"))
+                driverExt.waitUntilVisible(By.id("$componentId-popup"))
                 val options = element.findElements(
                     By.xpath(
-                        "//ul[@id = '$componentId-picker-listEl']/li[contains(text(), '$text')]"
+                        "//ul[@id = '$componentId-popup']/li[contains(text(), '$text')]"
                     )
                 )
                 require(options.isNotEmpty()) { "Element search returns empty." }

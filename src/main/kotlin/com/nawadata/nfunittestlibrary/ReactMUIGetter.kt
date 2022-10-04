@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary
 
+import com.nawadata.nfunittestlibrary.reactmui.DropdownInput
 import com.nawadata.nfunittestlibrary.reactmui.TextboxInput
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -27,7 +28,11 @@ class ReactMUIGetter(
         )
     }
 
-    fun getTextboxFromLabel(label: String): com.nawadata.nfunittestlibrary.reactmui.TextboxInput {
+    fun getTextboxFromLabel(label: String): TextboxInput {
         return TextboxInput(driver, driverExt, getInputFromLabel(label).getWebElement())
+    }
+
+    fun getDropdownFromLabel(label: String): DropdownInput {
+        return DropdownInput(driver, driverExt, driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().getWebElement())
     }
 }
