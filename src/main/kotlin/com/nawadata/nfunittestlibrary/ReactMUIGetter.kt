@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary
 
+import com.nawadata.nfunittestlibrary.finder.webelementext.WebElementExtGetter
 import com.nawadata.nfunittestlibrary.reactmui.DropdownInput
 import com.nawadata.nfunittestlibrary.reactmui.TextboxInput
 import org.openqa.selenium.By
@@ -18,21 +19,17 @@ class ReactMUIGetter(
 
     private fun getInputFromLabel(label: String): WebElementExtended {
         val xpathRoot = if (webElement != null) "descendant::" else "//"
-        val el = webElement ?: driver
-        return WebElementExtended(
-            driver, driverExt, el.findElement(
-                By.xpath(
-                    "$xpathRoot*[text()='$label']/ancestor::*[contains(@class, 'MuiFormControl-root')][position()=1]/descendant::*[contains(@class, 'MuiInputBase-input')]"
-                )
-            )
-        )
+        return WebElementExtGetter(driver, driverExt,
+            By.xpath(
+                "$xpathRoot*[text()='$label']/ancestor::*[contains(@class, 'MuiFormControl-root')][position()=1]/descendant::*[contains(@class, 'MuiInputBase-input')]"
+            )).untilElementInteractable()
     }
 
     fun getTextboxFromLabel(label: String): TextboxInput {
-        return TextboxInput(driver, driverExt, getInputFromLabel(label).getWebElement())
+        return TextboxInput(driver, driverExt, getInputFromLabel(label).highlightAndGetElement())
     }
 
     fun getDropdownFromLabel(label: String): DropdownInput {
-        return DropdownInput(driver, driverExt, driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().getWebElement())
+        return DropdownInput(driver, driverExt, driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().highlightAndGetElement())
     }
 }
