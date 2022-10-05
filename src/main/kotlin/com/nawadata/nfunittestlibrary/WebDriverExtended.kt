@@ -96,6 +96,9 @@ class   WebDriverExtended (
     }
 
     fun setWindowDimension(width: Int, height: Int) {
-        driver.manage().window().size = org.openqa.selenium.Dimension(width, height)
+        driver.manage().window().size = Dimension(width, height)
     }
+
+    fun highlightElement(element: WebElement) =
+        jsExecutor.executeScript("arguments[0].style.border='3px solid red'", element)
 }
