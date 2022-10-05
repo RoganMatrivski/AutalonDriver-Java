@@ -18,8 +18,8 @@ class DropdownInput (
     element,
     element.getAttribute("for")
 ) {
-    private val options: List<WebElement>
-        get() = driver.findElements(By.xpath("//ul[@id = '$componentId-popup']/li"))
+    private val options: Array<WebElement>
+        get() = driver.findElements(By.xpath("//ul[@id = '$componentId-popup']/li")).toTypedArray()
 
     private fun pickOption(index: Int): WebElement {
         val options = options
@@ -30,7 +30,7 @@ class DropdownInput (
             )
         }
         val selectedOption: WebElement = if (index < 0) {
-            Tools.getRandomElement<Any>(options.toTypedArray()) as WebElement
+            Tools.getRandomElement(options)
         } else {
             options[index]
         }
@@ -58,6 +58,7 @@ class DropdownInput (
         return this
     }
 
+    @Suppress("unused")
     fun selectElementOnIndex(index: Int): DropdownInput {
         element.findElement(By.xpath(
             "following::*[" +
@@ -80,6 +81,7 @@ class DropdownInput (
         return this
     }
 
+    @Suppress("unused")
     fun clearInput(): DropdownInput {
         try {
             element.findElement(By.xpath(
@@ -93,7 +95,7 @@ class DropdownInput (
         return this
     }
 
-    // TODO: Add Exact variant 
+    // TODO: Add Inexact variant
     fun selectElementFromText(text: String): DropdownInput {
         element.findElement(By.xpath(
             "following::*[" +
