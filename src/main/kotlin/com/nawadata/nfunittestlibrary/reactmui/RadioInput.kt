@@ -7,25 +7,23 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
 class RadioInput(
-    private val driver: WebDriver,
+    driver: WebDriver,
     private val driverExt: WebDriverExtended,
     private val element: WebElement,
-    private val componentId: String = element.getAttribute("data-componentid"),
 ) : BasicInputClass(
     driver,
     driverExt,
     element,
-    element.getAttribute("data-componentid")
 ) {
-    private val componentid = element.getAttribute("data-componentid")
 
-    private val options: List<WebElement>
-        get() = element.findElements(By.xpath("descendant::td"))
+    private val options: Array<WebElement>
+        get() = element.findElements(By.xpath(".//../descendant::*[contains(@class, 'MuiFormGroup-root')]/label")).toTypedArray()
 
     fun selectRandomElement(): RadioInput {
         val selectedOption =
-            (Tools.getRandomElement<Any>(options.toTypedArray()) as WebElement)
-                .findElement(By.xpath("descendant::input"))
+            (Tools.getRandomElement(options))
+
+        driverExt.highlightElement(selectedOption)
         selectedOption.click()
         return this
     }
@@ -38,25 +36,14 @@ class RadioInput(
                         + options.size + " elements."
             )
         }
-        val selectedOption =
-            options[index].findElement(By.xpath("descendant::input"))
+        val selectedOption = options[index]
         selectedOption.click()
         return this
     }
 
     fun selectElementFromText(text: String): RadioInput {
-        println(
-            "//div[@id='" + componentid + "-containerEl']/descendant::label[contains(text(), '"
-                    + text + "')]/../span/input"
-        )
-        val options = element.findElements(
-            By.xpath(
-                "//div[@id='" + componentid
-                        + "-containerEl']/descendant::label[contains(text(), '" + text + "')]/../span/input"
-            )
-        )
-        require(options.isNotEmpty()) { "Element search returns empty." }
-        val selected = options[0]
+        val option = options.find {webElement -> webElement.findElements(By.xpath("descendant::*[text()='$text']")).isNotEmpty() }!!
+        val selected = option
         driverExt.scrollToElement(selected)
         selected.click()
         return this

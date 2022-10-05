@@ -2,6 +2,7 @@ package com.nawadata.nfunittestlibrary
 
 import com.nawadata.nfunittestlibrary.finder.webelementext.WebElementExtGetter
 import com.nawadata.nfunittestlibrary.reactmui.DropdownInput
+import com.nawadata.nfunittestlibrary.reactmui.RadioInput
 import com.nawadata.nfunittestlibrary.reactmui.TextboxInput
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -31,5 +32,13 @@ class ReactMUIGetter(
 
     fun getDropdownFromLabel(label: String): DropdownInput {
         return DropdownInput(driver, driverExt, driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().highlightAndGetElement())
+    }
+
+    fun getRadioFromLabel(label: String): RadioInput {
+        return RadioInput(
+            driver,
+            driverExt,
+            driverExt.getElementExtended().byXPath("//legend[text() = '$label']").untilElementInteractable().highlightAndGetElement()
+        )
     }
 }
