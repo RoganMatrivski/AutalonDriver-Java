@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.3] - 2022-10-06
+### :sparkles: New Features
+- [`08653a4`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/08653a4b80e01d9d622ad79bee0442ac9fd9c5f5) - **ReactMUI**: Add TimeInput *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`01d96ed`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/01d96ed7b9fb90d22b65c75d7590e24b64463a5d) - **ReactMUI**: Add retry on basic actions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :bug: Bug Fixes
+- [`8695745`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/869574527dc6a9c0ca645699a6741e19842cda72) - **ReactMUI**: DateInput won't press OK button after picking date *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+
 ## [v0.1.2] - 2022-10-06
 ### :sparkles: New Features
 - [`1f5b2b3`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/1f5b2b3a584cdadc22b73df372ad3f00e839ab4b) - **WebElementExtended**: Add basic actions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
@@ -47,3 +56,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.1.0]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.0.1...v0.1.0
 
 [v0.1.2]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.1...v0.1.2
+[v0.1.3]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.2...v0.1.3
