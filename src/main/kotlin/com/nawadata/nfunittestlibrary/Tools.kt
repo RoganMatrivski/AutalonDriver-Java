@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 import java.util.stream.Stream
-import kotlin.math.abs
 
 @Suppress("unused")
 object Tools {
@@ -40,19 +39,8 @@ object Tools {
         return result
     }
 
-    @JvmStatic private fun randstr(size: Int, charset: CharArray): String {
-        val data = ByteArray(4 * size)
-        rand.nextBytes(data)
-        val result = StringBuilder(size)
-        for (i in 0 until size) {
-            // Java have no concept of unsigned.
-            // I don't know how this will behave here, so I add abs() for a good measure.
-            val rnd: Long = abs(toUInt32(data, i * 4))
-            val idx = (rnd % charset.size).toInt()
-            result.append(charset[idx])
-        }
-        return result.toString()
-    }
+    private fun randstr(size: Int, charset: List<Char>) =
+        List(size) {charset.random()}.joinToString("")
 
     @JvmStatic fun getCharStream(arr: CharArray): Stream<Char> =
         CharBuffer.wrap(arr).chars().mapToObj { ch: Int -> ch.toChar() }
@@ -94,7 +82,7 @@ object Tools {
             strBuilder.append(Consts.symbols)
         }
 
-        val charset = strBuilder.toString().toCharArray()
+        val charset = strBuilder.toList()
         var res: String = randstr(size, charset)
         while (getCharStream(res.toCharArray()).noneMatch { ch: Char ->
                 String(alphabetsCharset).contains(ch.toString()) && optToggle[0]
