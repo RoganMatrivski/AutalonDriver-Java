@@ -1,6 +1,7 @@
 package com.nawadata.nfunittestlibrary.reactmui
 
 import com.nawadata.nfunittestlibrary.WebDriverExtended
+import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
@@ -17,7 +18,8 @@ class TextboxInput(
     element,
 ) {
     fun clearText(): TextboxInput {
-        element.clear()
+        element.sendKeys(Keys.CONTROL, "a")
+        element.sendKeys(Keys.BACK_SPACE)
         return this
     }
 
