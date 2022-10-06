@@ -1,107 +1,75 @@
 package com.nawadata.nfunittestlibrary.reactmui
 
+import com.nawadata.nfunittestlibrary.Tools
 import com.nawadata.nfunittestlibrary.WebDriverExtended
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import java.time.Duration
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.math.abs
 
 class DateInput(
-    private val driver: WebDriver,
+    driver: WebDriver,
     private val driverExt: WebDriverExtended,
     private val element: WebElement,
-    private val componentId: String = element.getAttribute("data-componentid"),
 ) : BasicInputClass(
     driver,
     driverExt,
     element,
-    element.getAttribute("data-componentid")
 ) {
-    companion object {
-        @JvmStatic
-        fun fillDate(
-            driver: WebDriver,
-            driverExt: WebDriverExtended,
-            dateField: WebElement,
-            randomDate: LocalDate
-        ) {
-            val randomYear = randomDate.year
-            // final Month randomMonth = randomDate.getMonth();
-            val randomDay = randomDate.dayOfMonth
-            val formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
-            val randDate = formatter.format(randomDate)
-            val componentid = dateField.getAttribute("data-componentid")
-            driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
-                .click()
-            val datePickerComponent =
-                driver.findElement(By.id(String.format("%s-picker", componentid)))
-            datePickerComponent.findElement(
-                By.xpath("descendant::*[@data-ref='middleBtnEl']/descendant::*[@data-ref='btnInnerEl']")
-            ).click()
-            val monthPickerComponent =
-                datePickerComponent.findElement(By.xpath("*[contains(@id, 'monthpicker')]"))
-            val yearPickerComponent =
-                monthPickerComponent.findElement(By.xpath("descendant::*[@data-ref='yearEl']"))
-            val yearPickerNavPrevComponent =
-                yearPickerComponent.findElement(By.xpath("descendant::*[@data-ref='prevEl']"))
-            val yearPickerNavNextComponent =
-                yearPickerComponent.findElement(By.xpath("descendant::*[@data-ref='nextEl']"))
+    private fun monthStringToInt(month: String) =
+        SimpleDateFormat("MMMM", Locale.ENGLISH)
+            .parse(month)
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+            .monthValue // This is helluva complicated way to parse month string to int.
 
-            // Wait for the elements to be interactable
-            driverExt.wait(Duration.ofMillis(400))
-            while (true) {
-                val earliestYearAvailableStr = yearPickerComponent.findElement(
-                    By.xpath("*/*[@class='x-monthpicker-item-inner']")
-                ).text
-                val earliestYearAvailable = earliestYearAvailableStr.toInt()
-                if (randomYear < earliestYearAvailable) {
-                    yearPickerNavPrevComponent.click()
-                    continue
+    fun fillDate(date: LocalDate) {
+        // Click input
+        element.findElement(By.xpath(".//ancestor::*[${Tools.xpathInexactContains("@class", "MuiFormControl-root")}]/descendant::input")).click()
+
+        // Base dialog path
+        val dateDialogXPath = "//*[@class = 'MuiDialog-root']"
+
+        // Select year
+        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[contains(@class, 'MuiToolbar-root')]/descendant::h6").untilElementInteractable().click()
+        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class='MuiPickersYearSelection-container']/*[text() = '${date.year}']").untilElementInteractable().click()
+
+        // Get currently selected month
+        val headerText = driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/descendant::p").untilElementInteractable().getWebElement().text
+        val monthText = headerText.split(" ")[0]
+        val currentMonth = monthStringToInt(monthText)
+        val selectedMonth = date.monthValue
+
+        // Determine how many times to press the prev/next button
+        val stepAmount = selectedMonth - currentMonth
+
+        // Press the next/prev button
+        when {
+            stepAmount < 0 -> {
+                repeat(abs(stepAmount)) {
+                    driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/button[1]").untilElementInteractable().click()
                 }
-                if (randomYear >= earliestYearAvailable + 10) {
-                    yearPickerNavNextComponent.click()
-                    continue
-                }
-                break
             }
-            yearPickerComponent.findElement(
-                By.xpath(String.format("descendant::*[text()='%s']", randomYear))
-            ).click()
-            val monthListParent = datePickerComponent.findElement(
-                By.xpath("*[contains(@id, 'monthpicker')]/descendant::*[@data-ref='monthEl']")
-            )
-            monthListParent.findElement(
-                By.xpath(
-                    String.format(
-                        "descendant::*[text()='%s']",
-                        DateTimeFormatter.ofPattern("MMM").format(randomDate)
-                    )
-                )
-            ).click()
-            datePickerComponent.findElement(
-                By.xpath("*[contains(@id, 'monthpicker')]/descendant::span[text()='OK']")
-            ).click()
 
-            // Wait for the elements to be interactable
-            driverExt.wait(Duration.ofMillis(400))
-            val dateListParent = datePickerComponent.findElement(
-                By.xpath("descendant::*[@data-ref='innerEl']/table/tbody")
-            )
-            dateListParent.findElement(
-                By.xpath(
-                    String.format(
-                        "descendant::*[contains(@class, 'x-datepicker-active')]/*[text()='%s']",
-                        randomDay
-                    )
-                )
-            ).click()
+            stepAmount > 0 -> {
+                repeat(stepAmount) {
+                    driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/button[2]").untilElementInteractable().click()
+                }
+            }
         }
+
+        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendar-week']/descendant::p[text() = '${date.dayOfMonth}']").untilElementInteractable().click()
+        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::button/span[text() = 'OK']").untilElementInteractable().click()
     }
 
-    fun sendText(text: String?, ignoreErrors: Boolean?): DateInput {
-        val element = element
+    @JvmOverloads
+    fun sendText(text: String, ignoreErrors: Boolean = false): DateInput {
         val dateText: LocalDate = try {
             val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
             LocalDate.parse(text, formatter)
@@ -111,7 +79,7 @@ class DateInput(
                 e
             )
         }
-        fillDate(driver, driverExt, element, dateText)
+        fillDate(dateText)
         return this
     }
 }

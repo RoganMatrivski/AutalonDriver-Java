@@ -1,6 +1,7 @@
 package com.nawadata.nfunittestlibrary
 
 import com.nawadata.nfunittestlibrary.finder.webelementext.WebElementExtGetter
+import com.nawadata.nfunittestlibrary.reactmui.DateInput
 import com.nawadata.nfunittestlibrary.reactmui.DropdownInput
 import com.nawadata.nfunittestlibrary.reactmui.RadioInput
 import com.nawadata.nfunittestlibrary.reactmui.TextboxInput
@@ -39,6 +40,13 @@ class ReactMUIGetter(
             driver,
             driverExt,
             driverExt.getElementExtended().byXPath("//legend[text() = '$label']").untilElementInteractable().highlightAndGetElement()
+        )
+    }
+    fun getDateFromLabel(label: String): DateInput {
+        return DateInput(
+            driver,
+            driverExt,
+            driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().highlightAndGetElement()
         )
     }
 }
