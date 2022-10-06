@@ -65,7 +65,6 @@ class DateInput(
         }
 
         driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendar-week']/descendant::p[text() = '${date.dayOfMonth}']").untilElementInteractable().click()
-        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::button/span[text() = 'OK']").untilElementInteractable().click()
     }
 
     @JvmOverloads
