@@ -8,22 +8,19 @@ import org.openqa.selenium.WebElement
  * The type Number textbox input class.
  */
 class NumberTextboxInput(
-    private val driver: WebDriver,
-    private val driverExt: WebDriverExtended,
+    driver: WebDriver,
+    driverExt: WebDriverExtended,
     private val element: WebElement,
-    private val componentId: String = element.getAttribute("data-componentid"),
 ) : BasicInputClass(
     driver,
     driverExt,
     element,
     element.getAttribute("data-componentid")
 ) {
-    @JvmOverloads
-    fun <T> sendText(textObj: T, ignoreErrors: Boolean = false): NumberTextboxInput =
-        sendText(textObj.toString(), ignoreErrors)
+    fun <T> sendText(textObj: T): NumberTextboxInput =
+        sendText(textObj.toString())
 
-    @JvmOverloads
-    fun sendText(text: String, ignoreErrors: Boolean = false): NumberTextboxInput {
+    fun sendText(text: String): NumberTextboxInput {
         val element = element
         val intText: Int = try {
             text.toInt()

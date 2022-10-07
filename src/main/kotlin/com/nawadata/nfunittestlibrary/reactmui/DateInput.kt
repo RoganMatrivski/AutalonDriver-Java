@@ -29,7 +29,7 @@ class DateInput(
             .toLocalDate()
             .monthValue // This is helluva complicated way to parse month string to int.
 
-    fun fillDate(date: LocalDate) {
+    private fun fillDate(date: LocalDate) {
         // Click input
         element.findElement(By.xpath(".//ancestor::*[${Tools.xpathInexactContains("@class", "MuiFormControl-root")}]/descendant::input")).click()
 
@@ -67,8 +67,7 @@ class DateInput(
         driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendar-week']/descendant::p[text() = '${date.dayOfMonth}']").untilElementInteractable().click()
     }
 
-    @JvmOverloads
-    fun sendText(text: String, ignoreErrors: Boolean = false): DateInput {
+    fun sendText(text: String): DateInput {
         val dateText: LocalDate = try {
             val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
             LocalDate.parse(text, formatter)

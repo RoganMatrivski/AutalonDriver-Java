@@ -12,7 +12,6 @@ class DateInput(
     private val driver: WebDriver,
     private val driverExt: WebDriverExtended,
     private val element: WebElement,
-    private val componentId: String = element.getAttribute("data-componentid"),
 ) : BasicInputClass(
     driver,
     driverExt,
@@ -31,7 +30,7 @@ class DateInput(
             // final Month randomMonth = randomDate.getMonth();
             val randomDay = randomDate.dayOfMonth
             val formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
-            val randDate = formatter.format(randomDate)
+            formatter.format(randomDate)
             val componentid = dateField.getAttribute("data-componentid")
             driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
                 .click()
@@ -100,7 +99,7 @@ class DateInput(
         }
     }
 
-    fun sendText(text: String?, ignoreErrors: Boolean?): DateInput {
+    fun sendText(text: String?): DateInput {
         val element = element
         val dateText: LocalDate = try {
             val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")

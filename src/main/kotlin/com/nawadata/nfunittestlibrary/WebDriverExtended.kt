@@ -99,6 +99,6 @@ class   WebDriverExtended (
         driver.manage().window().size = Dimension(width, height)
     }
 
-    fun highlightElement(element: WebElement) =
+    fun highlightElement(element: WebElement): Any =
         jsExecutor.executeScript("arguments[0].style.border='3px solid red'", element)
 }

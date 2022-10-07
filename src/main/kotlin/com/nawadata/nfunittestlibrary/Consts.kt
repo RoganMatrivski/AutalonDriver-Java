@@ -1,7 +1,6 @@
 package com.nawadata.nfunittestlibrary
 
 import java.time.Duration
-import kotlin.properties.Delegates
 
 object Consts {
     @JvmStatic var lowerAlphabets = "abcdefghijklmnopqrstuvwxyz".toCharArray()

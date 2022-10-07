@@ -9,7 +9,7 @@ import org.openqa.selenium.interactions.Actions
 
 class HtmlInput(
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended,
+    driverExt: WebDriverExtended,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
@@ -36,16 +36,14 @@ class HtmlInput(
         return this
     }
 
-    @JvmOverloads
-    fun sendText(text: String, ignoreErrors: Boolean? = false): HtmlInput {
+    fun sendText(text: String): HtmlInput {
         val element = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::textarea"))
 
         element.sendKeys(text)
         return this
     }
 
-    @JvmOverloads
-    fun sendRawText(text: String, ignoreErrors: Boolean? = false): HtmlInput {
+    fun sendRawText(text: String): HtmlInput {
         val element = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::textarea"))
         val codeViewBtn = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::button[@data-command = 'codeView']"))
 

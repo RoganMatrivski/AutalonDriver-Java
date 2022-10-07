@@ -42,10 +42,11 @@ class RadioInput(
     }
 
     fun selectElementFromText(text: String): RadioInput {
-        val option = options.find {webElement -> webElement.findElements(By.xpath("descendant::*[text()='$text']")).isNotEmpty() }!!
-        val selected = option
-        driverExt.scrollToElement(selected)
-        selected.click()
+        val option = options.find { webElement ->
+            webElement.findElements(By.xpath("descendant::*[text()='$text']")).isNotEmpty()
+        }!!
+        driverExt.scrollToElement(option)
+        option.click()
         return this
     }
 }

@@ -7,10 +7,6 @@ import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
-import java.awt.Robot
-import java.time.Duration
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.cos
@@ -26,16 +22,15 @@ class TimeInput(
     element,
 ) {
     private fun getElementCenterCoordinate(element: WebElement): Point {
-        val location = element.location;
-        val size = element.size;
+        val location = element.location
+        val size = element.size
 
-        val x_loc = location.x + size.width - (size.width / 2)
-        val y_loc = location.y + size.height - (size.height / 2)
+        val xLoc = location.x + size.width - (size.width / 2)
+        val yLoc = location.y + size.height - (size.height / 2)
 
-        return Point(x_loc, y_loc)
+        return Point(xLoc, yLoc)
     }
 
-    private fun getDegreeFromHour(hour: Int): Float = ((360 - (hour * 30) + 90) % 360).toFloat()
     private fun getDegreeFromMinute(min: Int): Float = ((360 - (min * 6) + 90) % 360).toFloat()
 
     private fun degToRad(deg: Float): Float = (deg * (kotlin.math.PI / 180.0)).toFloat()
@@ -47,7 +42,7 @@ class TimeInput(
     }
 
 
-    fun fillTime(time: LocalTime) {
+    private fun fillTime(time: LocalTime) {
         // Click input
         element.findElement(By.xpath(".//ancestor::*[${Tools.xpathInexactContains("@class", "MuiFormControl-root")}]/descendant::input")).click()
 
@@ -66,20 +61,19 @@ class TimeInput(
 
         // Get position to click
         val minDegree = getDegreeFromMinute(time.minute)
-        val relativePosition = getCoordinateRelativeToDegree(minDegree);
-        val targetPosition = centerPinPos.moveBy(relativePosition.x, relativePosition.y);
+        val relativePosition = getCoordinateRelativeToDegree(minDegree)
+        centerPinPos.moveBy(relativePosition.x, relativePosition.y)
 
         Actions(driver)
             .moveToElement(centerPin)
             .moveByOffset(relativePosition.x, relativePosition.y)
             .click()
-            .perform();
+            .perform()
 
         driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::button/span[text() = 'OK']").untilElementInteractable().click()
     }
 
-    @JvmOverloads
-    fun sendText(text: String, ignoreErrors: Boolean = false): TimeInput {
+    fun sendText(text: String): TimeInput {
         val dateText: LocalTime = try {
             val formatter = DateTimeFormatter.ofPattern("H:m[:s]")
             LocalTime.parse(text, formatter)

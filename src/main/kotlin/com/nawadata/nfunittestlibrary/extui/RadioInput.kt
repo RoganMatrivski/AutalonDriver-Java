@@ -7,10 +7,9 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
 class RadioInput(
-    private val driver: WebDriver,
+    driver: WebDriver,
     private val driverExt: WebDriverExtended,
     private val element: WebElement,
-    private val componentId: String = element.getAttribute("data-componentid"),
 ) : BasicInputClass(
     driver,
     driverExt,

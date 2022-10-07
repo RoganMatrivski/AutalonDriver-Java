@@ -2,7 +2,6 @@ package com.nawadata.nfunittestlibrary.finder.webelement
 
 import com.nawadata.nfunittestlibrary.Enums
 import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.finder.webelementext.WebElementExtGetter
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 
