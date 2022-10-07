@@ -54,4 +54,12 @@ class ReactMUIGetter(
             driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().highlightAndGetElement()
         )
     }
+
+    fun getHTMLFromLabel(label: String): HtmlInput {
+        return HtmlInput(
+            driver,
+            driverExt,
+            driverExt.getElementExtended().byXPath("//p[text() = '$label']").untilElementInteractable().highlightAndGetElement()
+        )
+    }
 }

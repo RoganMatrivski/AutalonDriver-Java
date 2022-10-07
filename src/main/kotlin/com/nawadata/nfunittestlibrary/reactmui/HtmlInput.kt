@@ -1,8 +1,11 @@
 package com.nawadata.nfunittestlibrary.reactmui
 
 import com.nawadata.nfunittestlibrary.WebDriverExtended
+import org.openqa.selenium.By
+import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.interactions.Actions
 
 class HtmlInput(
     private val driver: WebDriver,
@@ -12,32 +15,57 @@ class HtmlInput(
     driver,
     driverExt,
     element,
-    "",
 ) {
     fun clearText(): HtmlInput {
-        val element = element
-        element.clear()
+        val element = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::textarea"))
+        val codeViewBtn = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::button[@data-command = 'codeView']"))
+
+        Actions(driver)
+            .click(codeViewBtn)
+
+            .click(element)
+            .keyDown(Keys.CONTROL)
+            .sendKeys("a")
+            .keyUp(Keys.CONTROL)
+            .sendKeys(Keys.BACK_SPACE)
+
+            .click(codeViewBtn)
+
+            .perform()
+
         return this
     }
+
     @JvmOverloads
     fun sendText(text: String, ignoreErrors: Boolean? = false): HtmlInput {
-        val element = element
-        val maxLengthStr = element.getAttribute("maxlength")
-        if (maxLengthStr != null) {
-            val maxLength = maxLengthStr.toInt()
-            require(!(text.length > maxLength && !ignoreErrors!!)) {
-                """
-                    The text length on the argument is bigger than the input maxlength.
-                    If this is an expected behavior, please add a boolean on the ignoreErrors argument
-                    """.trimIndent()
-            }
-        }
-        driverExt.jsExecutor.executeScript(
-            "arguments[0].innerHTML = arguments[1];",
-            element,
-            text
-        )
-        driver.switchTo().parentFrame()
+        val element = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::textarea"))
+
+        element.sendKeys(text)
+        return this
+    }
+
+    @JvmOverloads
+    fun sendRawText(text: String, ignoreErrors: Boolean? = false): HtmlInput {
+        val element = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::textarea"))
+        val codeViewBtn = this.element.findElement(By.xpath("../descendant::*[@class = 'sun-editor']/descendant::button[@data-command = 'codeView']"))
+
+        Actions(driver)
+            .click(codeViewBtn)
+
+            .click(element)
+            .keyDown(Keys.CONTROL)
+            .sendKeys("a")
+            .keyUp(Keys.CONTROL)
+            .sendKeys(Keys.BACK_SPACE)
+
+            .click(element)
+            .sendKeys(text)
+
+            .click(codeViewBtn)
+
+            .perform()
+
         return this
     }
 }
+
