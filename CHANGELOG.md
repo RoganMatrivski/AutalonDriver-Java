@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.4] - 2022-10-07
+### :sparkles: New Features
+- [`b2b4b81`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/b2b4b818056d44663b09e96f6ac24e5deff78cb4) - **ReactMUI**: Add delay for each basic action attempt *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`ef32c4b`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/ef32c4b5b0948db2ec1f67b2715c99ece60f0126) - **ReactMUI**: Add HTML Input *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :bug: Bug Fixes
+- [`839c5f1`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/839c5f1f33fd91464e3303ede94ab28036796e82) - **ReactMUI**: TimeInput sometimes picks a minute behind *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :recycle: Refactors
+- [`02df424`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/02df424c1f37afcd413de80df451503c41a24f0f) - Fixes IntelliJ IDEA fix suggestion *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :wrench: Chores
+- [`d580ec2`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/d580ec20025a4be86b1930bf0ccf59463030950c) - **ReactMUI**: Add runner class for testing library *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+
 ## [v0.1.3] - 2022-10-06
 ### :sparkles: New Features
 - [`08653a4`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/08653a4b80e01d9d622ad79bee0442ac9fd9c5f5) - **ReactMUI**: Add TimeInput *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
@@ -57,3 +72,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [v0.1.2]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.1...v0.1.2
 [v0.1.3]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.2...v0.1.3
+[v0.1.4]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.3...v0.1.4
