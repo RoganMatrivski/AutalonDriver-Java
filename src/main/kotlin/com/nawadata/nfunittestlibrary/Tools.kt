@@ -42,6 +42,9 @@ object Tools {
     private fun randstr(size: Int, charset: List<Char>) =
         List(size) {charset.random()}.joinToString("")
 
+    @JvmStatic fun fastRandStr(size: Int) =
+        randstr(size, (Consts.lowerAlphabets + Consts.upperAlphabets + Consts.numbers).toList())
+
     @JvmStatic fun getCharStream(arr: CharArray): Stream<Char> =
         CharBuffer.wrap(arr).chars().mapToObj { ch: Int -> ch.toChar() }
 
@@ -112,8 +115,9 @@ object Tools {
         return DateTimeFormatter.ofPattern(pattern).format(LocalDate.ofEpochDay(randomTime))
     }
 
-    @JvmStatic fun randomDateString(dateAfter: String, dateBefore: String, pattern: String): String {
-        val dateParser = SimpleDateFormat("dd-MM-yyyy")
+    @JvmStatic @JvmOverloads
+    fun randomDateString(dateAfter: String, dateBefore: String, pattern: String = "dd-MM-yyyy"): String {
+        val dateParser = SimpleDateFormat(pattern)
         var res = ""
         try {
             res = randomDateString(

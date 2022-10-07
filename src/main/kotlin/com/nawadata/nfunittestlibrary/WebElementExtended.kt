@@ -2,6 +2,7 @@ package com.nawadata.nfunittestlibrary
 
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import java.time.Duration
 
 class WebElementExtended(
     private val driver: WebDriver,
@@ -26,6 +27,7 @@ class WebElementExtended(
             } catch (e: Exception) {
                 lastException = e
                 retryCount--
+                driverExt.wait(Duration.ofMillis(200))
             }
         }
 
@@ -42,6 +44,7 @@ class WebElementExtended(
             } catch (e: Exception) {
                 lastException = e
                 retryCount--
+                driverExt.wait(Duration.ofMillis(200))
             }
         }
 
