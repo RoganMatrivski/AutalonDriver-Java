@@ -39,11 +39,11 @@ class TimeInput(
     private fun getDegreeFromMinute(min: Int): Float = ((360 - (min * 6) + 90) % 360).toFloat()
 
     private fun degToRad(deg: Float): Float = (deg * (kotlin.math.PI / 180.0)).toFloat()
-    private fun getCoordinateRelativeToDegree(deg: Float, radius: Float = 10.0f): Point {
+    private fun getCoordinateRelativeToDegree(deg: Float, radius: Float = 30.0f): Point {
         val x = radius * cos(degToRad(deg))
         val y = radius * sin(degToRad(deg)) * -1 // Invert y coordinate
 
-        return Point(x.toInt(), y.toInt())
+        return Point(x.toInt(), y.toInt() - 1) // Don't click on the borders
     }
 
 
@@ -56,11 +56,9 @@ class TimeInput(
 
         // Select hour
         driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[contains(@class, 'MuiToolbar-root')]/descendant::h2").untilElementInteractable().click()
-        driverExt.wait(Duration.ofMillis(100)) // Hardcoded transition wait
-        val hourElement = driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class =  'MuiPickersClock-clock']/span[text() = '${time.hour}']").untilElementInteractable()
+        val hourElement = driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class =  'MuiPickersClock-clock']/span[text() = '${if (time.hour == 0) {"00"} else {time.hour}}']").untilElementInteractable()
         hourElement.highlightAndGetElement()
         Actions(driver).moveToElement(hourElement.getWebElement()).click().perform()
-        driverExt.wait(Duration.ofMillis(100)) // Hardcoded transition wait
 
         // Get center pin coordinates
         val centerPin = driverExt.getElementExtended().byXPath("//*[@class = 'MuiPickersClock-pin']").now()
@@ -70,10 +68,6 @@ class TimeInput(
         val minDegree = getDegreeFromMinute(time.minute)
         val relativePosition = getCoordinateRelativeToDegree(minDegree);
         val targetPosition = centerPinPos.moveBy(relativePosition.x, relativePosition.y);
-//        System.out.println(minDegree)
-//        System.out.println(relativePosition)
-//        System.out.println(centerPinPos)
-//        System.out.println(targetPosition)
 
         Actions(driver)
             .moveToElement(centerPin)
