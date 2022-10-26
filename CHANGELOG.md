@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.5] - 2022-10-26
+### :bug: Bug Fixes
+- [`653fb40`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/653fb40d357d965a10c92153b28d792ff0e9f348) - **Ext UI**: Getter not returning itself *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+
 ## [v0.1.4] - 2022-10-07
 ### :sparkles: New Features
 - [`b2b4b81`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/b2b4b818056d44663b09e96f6ac24e5deff78cb4) - **ReactMUI**: Add delay for each basic action attempt *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
@@ -73,3 +78,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.1.2]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.1...v0.1.2
 [v0.1.3]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.2...v0.1.3
 [v0.1.4]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.3...v0.1.4
+[v0.1.5]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.4...v0.1.5
