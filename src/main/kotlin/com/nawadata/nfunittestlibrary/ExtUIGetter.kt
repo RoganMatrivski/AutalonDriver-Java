@@ -15,10 +15,10 @@ class ExtUIGetter(
 
     fun shouldBe() = ShouldBe(driver, driverExt, webElement!!) // If there's no webElement, just throw exception
 
-    fun getInputFromLabel(label: String): WebElementExtended {
+    fun getInputFromLabel(label: String): ExtUIGetter {
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
-        return WebElementExtended(
+        return ExtUIGetter(
             driver, driverExt, el.findElement(
                 By.xpath(
                     xpathRoot + "span[text() = '" + label
@@ -28,10 +28,10 @@ class ExtUIGetter(
         )
     }
 
-    fun getIFrameFromLabel(label: String): WebElementExtended {
+    fun getIFrameFromLabel(label: String): ExtUIGetter {
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
-        return WebElementExtended(
+        return ExtUIGetter(
             driver, driverExt, el
                 .findElement(
                     By.xpath(
@@ -42,10 +42,10 @@ class ExtUIGetter(
         )
     }
 
-    fun getWindowFromTitle(title: String): WebElementExtended {
+    fun getWindowFromTitle(title: String): ExtUIGetter {
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
-        return WebElementExtended(
+        return ExtUIGetter(
             driver, driverExt, el
                 .findElement(
                     By.xpath(
@@ -57,10 +57,10 @@ class ExtUIGetter(
         )
     }
 
-    fun getGroupFromTitle(title: String): WebElementExtended {
+    fun getGroupFromTitle(title: String): ExtUIGetter {
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
-        return WebElementExtended(
+        return ExtUIGetter(
             driver, driverExt, el
                 .findElement(
                     By.xpath(

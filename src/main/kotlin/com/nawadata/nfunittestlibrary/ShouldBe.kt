@@ -1,8 +1,6 @@
 package com.nawadata.nfunittestlibrary
 
 import com.nawadata.nfunittestlibrary.exceptions.IncorrectTypeException
-import com.nawadata.nfunittestlibrary.extui.HtmlInput
-import com.nawadata.nfunittestlibrary.extui.TextboxInput
 import com.nawadata.nfunittestlibrary.extui.*
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
