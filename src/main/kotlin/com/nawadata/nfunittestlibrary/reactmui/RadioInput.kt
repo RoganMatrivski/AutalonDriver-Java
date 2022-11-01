@@ -17,13 +17,13 @@ class RadioInput(
 ) {
 
     private val options: Array<WebElement>
-        get() = element.findElements(By.xpath(".//../descendant::*[contains(@class, 'MuiFormGroup-root')]/label")).toTypedArray()
+        get() = element.findElements(By.xpath("../descendant::*[contains(@class, 'MuiFormGroup-root')]/label")).toTypedArray()
 
     fun selectRandomElement(): RadioInput {
         val selectedOption =
             (Tools.getRandomElement(options))
 
-        driverExt.highlightElement(selectedOption)
+//        driverExt.highlightElement(selectedOption)
         selectedOption.click()
         return this
     }
