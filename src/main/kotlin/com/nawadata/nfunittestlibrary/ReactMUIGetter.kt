@@ -1,6 +1,5 @@
 package com.nawadata.nfunittestlibrary
 
-import com.nawadata.nfunittestlibrary.finder.webelementext.WebElementExtGetter
 import com.nawadata.nfunittestlibrary.reactmui.*
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -14,52 +13,66 @@ class ReactMUIGetter(
     constructor(driver: WebDriver) : this(driver, WebDriverExtended(driver), null)
     constructor(driver: WebDriver, driverExt: WebDriverExtended) : this(driver, driverExt, null)
 
-    fun shouldBe() = ShouldBe(driver, driverExt, webElement!!) // If there's no webElement, just throw exception
-
-    private fun getInputFromLabel(label: String): WebElementExtended {
-        val xpathRoot = if (webElement != null) "descendant::" else "//"
-        return WebElementExtGetter(driver, driverExt,
-            By.xpath(
-                "$xpathRoot*[text()='$label']/ancestor::*[contains(@class, 'MuiFormControl-root')][position()=1]/descendant::*[contains(@class, 'MuiInputBase-input')]"
-            )).untilElementInteractable()
+    @JvmOverloads
+    fun getTextboxFromLabel(label: String, inexactLabel: Boolean = false): TextboxInput {
+        return TextboxInput(
+            driver,
+            driverExt,
+            driverExt.getElementExtended().byString(label, exactText = !inexactLabel)
+                .untilElementInteractable().highlightAndGetElement()
+                .findElement(By.xpath("" +
+                        "ancestor::*[contains(@class, 'MuiFormControl-root')][1]" +
+                        "/descendant::*[contains(@class, 'MuiInputBase-input')]"))
+        )
     }
 
-    fun getTextboxFromLabel(label: String): TextboxInput {
-        return TextboxInput(driver, driverExt, getInputFromLabel(label).highlightAndGetElement())
+    @JvmOverloads
+    fun getDropdownFromLabel(label: String, inexactLabel: Boolean = false): DropdownInput {
+        return DropdownInput(
+            driver,
+            driverExt,
+            driverExt.getElementExtended().byString(label, tag = "label", exactText = !inexactLabel)
+                .untilElementInteractable().highlightAndGetElement()
+        )
     }
 
-    fun getDropdownFromLabel(label: String): DropdownInput {
-        return DropdownInput(driver, driverExt, driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().highlightAndGetElement())
-    }
-
-    fun getRadioFromLabel(label: String): RadioInput {
+    @JvmOverloads
+    fun getRadioFromLabel(label: String, inexactLabel: Boolean = false): RadioInput {
         return RadioInput(
             driver,
             driverExt,
-            driverExt.getElementExtended().byXPath("//legend[text() = '$label']").untilElementInteractable().highlightAndGetElement()
+            driverExt.getElementExtended().byString(label, tag = "legend", exactText = !inexactLabel)
+                .untilElementInteractable().highlightAndGetElement()
         )
     }
-    fun getDateFromLabel(label: String): DateInput {
+
+    @JvmOverloads
+    fun getDateFromLabel(label: String, inexactLabel: Boolean = false): DateInput {
         return DateInput(
             driver,
             driverExt,
-            driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().highlightAndGetElement()
+            driverExt.getElementExtended().byString(label, tag = "label", exactText = !inexactLabel)
+                .untilElementInteractable().highlightAndGetElement()
         )
     }
 
-    fun getTimeFromLabel(label: String): TimeInput {
+    @JvmOverloads
+    fun getTimeFromLabel(label: String, inexactLabel: Boolean = false): TimeInput {
         return TimeInput(
             driver,
             driverExt,
-            driverExt.getElementExtended().byXPath("//label[text() = '$label']").untilElementInteractable().highlightAndGetElement()
+            driverExt.getElementExtended().byString(label, tag = "label", exactText = !inexactLabel)
+                .untilElementInteractable().highlightAndGetElement()
         )
     }
 
-    fun getHTMLFromLabel(label: String): HtmlInput {
+    @JvmOverloads
+    fun getHTMLFromLabel(label: String, inexactLabel: Boolean = false): HtmlInput {
         return HtmlInput(
             driver,
             driverExt,
-            driverExt.getElementExtended().byXPath("//p[text() = '$label']").untilElementInteractable().highlightAndGetElement()
+            driverExt.getElementExtended().byString(label, tag = "p", exactText = !inexactLabel)
+                .untilElementInteractable().highlightAndGetElement()
         )
     }
 }
