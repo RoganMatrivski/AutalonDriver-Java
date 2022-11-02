@@ -12,60 +12,84 @@ class ExtUIGetter(
     constructor(driver: WebDriver) : this(driver, WebDriverExtended(driver), null)
     constructor(driver: WebDriver, driverExt: WebDriverExtended) : this(driver, driverExt, null)
 
-
     fun shouldBe() = ShouldBe(driver, driverExt, webElement!!) // If there's no webElement, just throw exception
 
-    fun getInputFromLabel(label: String): ExtUIGetter {
+    @JvmOverloads
+    fun getInputFromLabel(label: String, inexactLabel: Boolean = false): ExtUIGetter {
+        val elementGetterXPath =
+            if (inexactLabel)
+                Tools.xpathInexactContains("text()", label)
+            else
+                "text() = '$label'"
+
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el.findElement(
                 By.xpath(
-                    xpathRoot + "span[text() = '" + label
-                            + "']/ancestor::label/../descendant::*[@data-ref='inputEl']"
+                    xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']"
                 )
             )
         )
     }
 
-    fun getIFrameFromLabel(label: String): ExtUIGetter {
+    @JvmOverloads
+    fun getIFrameFromLabel(label: String, inexactLabel: Boolean = false): ExtUIGetter {
+        val elementGetterXPath =
+            if (inexactLabel)
+                Tools.xpathInexactContains("text()", label)
+            else
+                "text() = '$label'"
+
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el
                 .findElement(
                     By.xpath(
-                        xpathRoot + "span[text() = '" + label
-                                + "']/ancestor::label/../descendant::*[@data-ref='iframeEl']"
+                        xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='iframeEl']"
                     )
                 )
         )
     }
 
-    fun getWindowFromTitle(title: String): ExtUIGetter {
+    @JvmOverloads
+    fun getWindowFromTitle(title: String, inexactLabel: Boolean = false): ExtUIGetter {
+        val elementGetterXPath =
+            if (inexactLabel)
+                Tools.xpathInexactContains("text()", title)
+            else
+                "text() = '$title'"
+
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el
                 .findElement(
                     By.xpath(
-                        xpathRoot + "div[text()='" + title
-                                + "' and @data-ref='textEl']/"
-                                + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]"
+                        xpathRoot +
+                            "div[$elementGetterXPath and @data-ref='textEl']/"
+                            + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]"
                     )
                 )
         )
     }
 
-    fun getGroupFromTitle(title: String): ExtUIGetter {
+    @JvmOverloads
+    fun getGroupFromTitle(title: String, inexactLabel: Boolean = false): ExtUIGetter {
+        val elementGetterXPath =
+            if (inexactLabel)
+                Tools.xpathInexactContains("text()", title)
+            else
+                "text() = '$title'"
+
         val xpathRoot = if (webElement == null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el
                 .findElement(
                     By.xpath(
-                        xpathRoot + "div[text()='" + title
-                                + "']//ancestor::div[contains(@class, 'x-panel x-panel-default')]"
+                        xpathRoot + "div[$elementGetterXPath]//ancestor::div[contains(@class, 'x-panel x-panel-default')]"
                     )
                 )
         )
