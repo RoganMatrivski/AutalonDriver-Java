@@ -12,7 +12,7 @@ class WebElementExtended(
     fun getWebElement() = webElement!!
 
     fun highlightAndGetElement(): WebElement {
-        driverExt.jsExecutor.executeScript("arguments[0].style.border='3px solid red'", webElement!!)
+        driverExt.jsExecutor.executeScript("arguments[0].style.outline='4px solid red'", webElement!!)
         return webElement
     }
 
