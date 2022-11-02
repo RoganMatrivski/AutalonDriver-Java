@@ -1,2 +1,2 @@
 
-rootProject.name = "AutalonDriver"
+rootProject.name = "autalondriver"
