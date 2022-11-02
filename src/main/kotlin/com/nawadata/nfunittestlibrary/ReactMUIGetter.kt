@@ -15,14 +15,22 @@ class ReactMUIGetter(
 
     @JvmOverloads
     fun getTextboxFromLabel(label: String, inexactLabel: Boolean = false): TextboxInput {
+        val xpathGet =
+            if (inexactLabel)
+                "//*[${Tools.xpathInexactContains("text()", label)}]"
+            else
+                "//*[text() = '$label']"
+
         return TextboxInput(
             driver,
             driverExt,
-            driverExt.getElementExtended().byString(label, exactText = !inexactLabel)
+            driverExt.getElementExtended()
+                .byXPath(
+                    "$xpathGet/" +
+                            "ancestor::*[contains(@class, 'MuiFormControl-root')][1]" +
+                            "/descendant::*[contains(@class, 'MuiInputBase-input')]"
+                )
                 .untilElementInteractable().highlightAndGetElement()
-                .findElement(By.xpath("" +
-                        "ancestor::*[contains(@class, 'MuiFormControl-root')][1]" +
-                        "/descendant::*[contains(@class, 'MuiInputBase-input')]"))
         )
     }
 
