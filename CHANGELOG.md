@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.0] - 2022-11-02
+### :sparkles: New Features
+- [`ce5de10`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/ce5de104ac05d1ee2acc4b2d4e36d148e63145ba) - **React MUI**: Add inexact label search *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`145d438`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/145d4384b82884169711e56c21d5abdf78eb3f64) - **React MUI**: Change highlight function to use 'outline' *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`dccd5a3`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/dccd5a3168f110cc5d5264ea9c65e24014b77150) - **ExtUI**: Add inexact label search *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`e22712b`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/e22712bb39ec46f192674ed2eda558957ef6ea16) - **React MUI**: Add CheckboxInput *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :bug: Bug Fixes
+- [`0fc41d1`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/0fc41d177ffae2fe782e4ade7c138155a2eb0b41) - **React MUI**: Disable radio select highlight *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`895c60d`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/895c60d930cbe4c59b53631495e8d485c31e2964) - **React MUI**: Textbox input waits for invalid target to be interactable *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :recycle: Refactors
+- [`e898481`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/e898481c6076903e242bda05731bc03bb212df8f) - Rename package name *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :boom: BREAKING CHANGES
+- due to [`e898481`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/e898481c6076903e242bda05731bc03bb212df8f) - Rename package name *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*:
+
+  Package name has been renamed
+
+
 ## [v0.1.5] - 2022-10-26
 ### :bug: Bug Fixes
 - [`653fb40`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/653fb40d357d965a10c92153b28d792ff0e9f348) - **Ext UI**: Getter not returning itself *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
@@ -79,3 +99,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.1.3]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.2...v0.1.3
 [v0.1.4]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.3...v0.1.4
 [v0.1.5]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.4...v0.1.5
+[v0.2.0]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.5...v0.2.0
