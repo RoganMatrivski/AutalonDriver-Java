@@ -16,20 +16,23 @@ object Tools {
     private val rand = kotlin.random.Random
     @JvmStatic fun getVersion(): String = Tools.javaClass.`package`.implementationVersion
 
-    @JvmStatic fun xpathToLower(attribute: String) = String.format(
-        "translate(%s, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')", attribute
-    )
+    @JvmStatic fun xpathToLower(attribute: String) =
+        "translate($attribute, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"
 
     @JvmStatic fun xpathInexactContains(a: String, b: String) =
-        String.format("contains(%s, '%s')", xpathToLower(a), b.lowercase(Locale.getDefault()))
+        "contains(${xpathToLower(a)}, '${b.lowercase(java.util.Locale.getDefault())}')"
 
     @JvmStatic @JvmOverloads
     fun getElementContainingStringExact(text: String, by: Enums.ByOption, tag: String = "*", index: Int = 1): By =
-        By.xpath(String.format("//%s[%s = '%s'][%s]", tag, by.strName, text, index))
+        By.xpath(
+            "//$tag[${by.strName} = '$text'][$index]"
+        )
 
     @JvmStatic @JvmOverloads
     fun getElementContainingString(text: String, by: Enums.ByOption, tag: String = "*", index: Int = 1): By =
-        By.xpath(String.format("//%s[%s][%s]", tag, xpathInexactContains(by.strName, text), index))
+        By.xpath(
+            "//$tag[${xpathInexactContains(by.strName, text)}][$index]"
+        )
 
     @JvmStatic fun toUInt32(bytes: ByteArray, offset: Int): Long {
         var result = java.lang.Byte.toUnsignedLong(bytes[offset + 3])
@@ -99,7 +102,7 @@ object Tools {
     }
 
     @JvmStatic fun getRandomEmail() =
-        String.format("%s@%s.com", randomString(), randomString())
+        "${randomString()}@${randomString()}.com"
 
     @JvmStatic fun randomDate(dateAfter: LocalDate, dateBefore: LocalDate): LocalDate {
         val randomTime = ThreadLocalRandom.current().nextLong(dateAfter.toEpochDay(), dateBefore.toEpochDay())
@@ -151,5 +154,5 @@ object Tools {
 
     @Deprecated("Function was ambiguous with both name and function", replaceWith = ReplaceWith("getElementContainingString()"), level = DeprecationLevel.ERROR)
     @JvmStatic fun getElementByText(text: String, tag: String = "*"): By =
-        By.xpath(String.format("//%s[contains(text(), '%s')]", tag, text))
+        By.xpath("//$tag[contains(text(), '$text')]");
 }
