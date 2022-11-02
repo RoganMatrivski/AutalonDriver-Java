@@ -70,13 +70,14 @@ class WebElementExtFrom(
         string: String,
         by: Enums.ByOption = Enums.ByOption.Text,
         tag: String = "*",
-        exactText: Boolean = false
+        exactText: Boolean = false,
+        index: Int = 1
     ) = WebElementExtGetter(
         driver, driverExt,
         if (exactText)
-            Tools.getElementContainingStringExact(string, by, tag)
+            Tools.getElementContainingStringExact(string, by, tag, index)
         else
-            Tools.getElementContainingString(string, by, tag)
+            Tools.getElementContainingString(string, by, tag, index)
     )
 
     fun byXPath(

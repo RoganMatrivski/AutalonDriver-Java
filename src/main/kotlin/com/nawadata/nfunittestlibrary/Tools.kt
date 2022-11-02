@@ -24,12 +24,12 @@ object Tools {
         String.format("contains(%s, '%s')", xpathToLower(a), b.lowercase(Locale.getDefault()))
 
     @JvmStatic @JvmOverloads
-    fun getElementContainingStringExact(text: String, by: Enums.ByOption, tag: String = "*"): By =
-        By.xpath(String.format("//%s[%s = '%s']", tag, by.strName, text))
+    fun getElementContainingStringExact(text: String, by: Enums.ByOption, tag: String = "*", index: Int = 1): By =
+        By.xpath(String.format("//%s[%s = '%s'][%s]", tag, by.strName, text, index))
 
     @JvmStatic @JvmOverloads
-    fun getElementContainingString(text: String, by: Enums.ByOption, tag: String = "*"): By =
-        By.xpath(String.format("//%s[%s]", tag, xpathInexactContains(by.strName, text)))
+    fun getElementContainingString(text: String, by: Enums.ByOption, tag: String = "*", index: Int = 1): By =
+        By.xpath(String.format("//%s[%s][%s]", tag, xpathInexactContains(by.strName, text), index))
 
     @JvmStatic fun toUInt32(bytes: ByteArray, offset: Int): Long {
         var result = java.lang.Byte.toUnsignedLong(bytes[offset + 3])
