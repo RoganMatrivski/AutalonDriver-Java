@@ -83,4 +83,14 @@ class ReactMUIGetter(
                 .untilElementInteractable().highlightAndGetElement()
         )
     }
+
+    @JvmOverloads
+    fun getCheckboxFromLabel(label: String, inexactLabel: Boolean = false): CheckboxInput {
+        return CheckboxInput(
+            driver,
+            driverExt,
+            driverExt.getElementExtended().byString(label, tag = "span", exactText = !inexactLabel)
+                .untilElementInteractable().highlightAndGetElement()
+        )
+    }
 }
