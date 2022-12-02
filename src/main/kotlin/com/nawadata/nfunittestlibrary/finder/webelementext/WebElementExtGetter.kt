@@ -47,4 +47,7 @@ class WebElementExtGetter(
             throw ex
         }
     }
+
+    fun clickAwait() = this.untilElementInteractable().click()
+    fun sendKeysAwait(str: String) = this.untilElementInteractable().sendKeys(str)
 }
