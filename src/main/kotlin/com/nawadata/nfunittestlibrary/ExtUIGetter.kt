@@ -98,6 +98,7 @@ class ExtUIGetter(
         )
     }
 
+    @JvmOverloads
     fun getFilterColumnInputByName(columnName: String, inexactLabel: Boolean = false): TextboxInput {
         val textElementGetter =
             if (inexactLabel)
