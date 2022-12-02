@@ -1,8 +1,11 @@
 package com.nawadata.nfunittestlibrary
 
+import com.nawadata.nfunittestlibrary.extui.TextboxInput
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
 
 class ExtUIGetter(
     private val driver: WebDriver,
@@ -93,5 +96,28 @@ class ExtUIGetter(
                     )
                 )
         )
+    }
+
+    fun getFilterColumnInputByName(columnName: String, inexactLabel: Boolean = false): TextboxInput {
+        val textElementGetter =
+            if (inexactLabel)
+                Tools.xpathInexactContains("text()", columnName)
+            else
+                "text() = '$columnName'"
+
+        val xpathRoot = if (webElement == null) "descendant::" else "//"
+        val el = webElement ?: driver
+        val xpathQuery = "" +
+                "$xpathRoot*[contains(@class, 'x-grid-header-ct')]" +
+                "//div[contains(@class, 'x-column-header')]" +
+                "//span[$textElementGetter]" +
+                "/ancestor::div[@role='columnheader']" +
+                "//input"
+
+        val elementSearch = el.findElement(By.xpath(xpathQuery))
+        WebDriverWait(driver, Consts.defaultTimeout.seconds)
+            .until(ExpectedConditions.elementToBeClickable(elementSearch))
+
+        return TextboxInput(driver, driverExt, elementSearch)
     }
 }
