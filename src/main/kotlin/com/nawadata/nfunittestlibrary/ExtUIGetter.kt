@@ -129,7 +129,7 @@ class ExtUIGetter(
         }
 
         val xpathIndex = if (nonZeroIndex < 0) {
-            "last() $nonZeroIndex"
+            "last() + 1 $nonZeroIndex"
         } else {
             nonZeroIndex
         }
