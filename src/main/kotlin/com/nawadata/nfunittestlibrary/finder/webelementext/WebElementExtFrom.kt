@@ -85,6 +85,7 @@ class WebElementExtFrom(
     ) = WebElementExtGetter(
         driver, driverExt, By.xpath(xpath))
 
+    @JvmOverloads
     fun waitUntilStringVisible(
         string: String,
         by: Enums.ByOption = Enums.ByOption.Text,
