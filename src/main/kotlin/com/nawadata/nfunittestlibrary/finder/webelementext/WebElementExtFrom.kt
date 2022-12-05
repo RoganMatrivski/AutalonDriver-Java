@@ -85,15 +85,15 @@ class WebElementExtFrom(
     ) = WebElementExtGetter(
         driver, driverExt, By.xpath(xpath))
 
-    fun waitForStringVisible(
+    fun waitUntilStringVisible(
         string: String,
         by: Enums.ByOption = Enums.ByOption.Text,
         tag: String = "*",
         exactText: Boolean = false,
         index: Int = 1
-    ) = this.byString(string, by, tag, exactText, index).untilElementVisible()
+    ) = this.byString(string, by, tag, exactText, index).untilElementVisible().highlightAndGetElement()
 
-    fun waitForXPathVisible(
+    fun waitUntilXPathVisible(
         xpath: String
-    ) = this.byXPath(xpath).untilElementVisible()
+    ) = this.byXPath(xpath).untilElementVisible().highlightAndGetElement()
 }
