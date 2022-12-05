@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary
 
+import com.nawadata.nfunittestlibrary.extui.TableRow
 import com.nawadata.nfunittestlibrary.extui.TextboxInput
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -120,5 +121,27 @@ class ExtUIGetter(
             .until(ExpectedConditions.elementToBeClickable(elementSearch))
 
         return TextboxInput(driver, driverExt, elementSearch)
+    }
+
+    fun getRowElementByIndex(nonZeroIndex: Int): TableRow {
+        if (nonZeroIndex == 0) {
+            throw Exception("Index is at zero")
+        }
+
+        val xpathIndex = if (nonZeroIndex < 0) {
+            "last() $nonZeroIndex"
+        } else {
+            nonZeroIndex
+        }
+
+        val xpathRoot = if (webElement != null) "descendant::" else "//"
+        val el = webElement ?: driver
+        val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
+
+        val elementSearch = el.findElement(By.xpath(xpathQuery))
+        WebDriverWait(driver, Consts.defaultTimeout.seconds)
+            .until(ExpectedConditions.visibilityOf(elementSearch))
+
+        return TableRow(driver, driverExt, elementSearch)
     }
 }
