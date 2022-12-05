@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.1] - 2022-12-05
+### :sparkles: New Features
+- [`97c72b8`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/97c72b8757673d3733753e063ed34bd9c5148419) - **Web Element**: Add index parameter *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`b7cef05`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/b7cef05d4292aabe3cd8c9d96e63f1a4aee8ca29) - Add new function to shorten common actions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`cba5f15`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/cba5f15dba7d86f9fe5e9ec9553522da7d1be2e8) - Add func getFilterColumnInputByName *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`1935ff6`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/1935ff6778e2a5ab3d2422178658c178c52a17c6) - Add wait until visible version of getter *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`9f8d50f`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/9f8d50fec2c1c670236881cd1a3535705b289e10) - Add row input *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :bug: Bug Fixes
+- [`84a7cd2`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/84a7cd29b6c9d86630c81f5365933ffb38fd57b7) - Overload functions not showing in java *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`5d01675`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/5d01675710312a3359003dde40aa0c84609fcf19) - Rename functions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`dbc2b00`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/dbc2b00c93a7c78b701b7359fe301667a3059856) - Date input stop working on required inputs *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :recycle: Refactors
+- [`bfe159a`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/bfe159a3c74b513a4aacba4bd60595908999d606) - Remove unused files *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`a209c7b`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/a209c7b9d1d990da060e68e3d351719f6f0992d5) - Replace String.format functions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+
 ## [v0.2.0] - 2022-11-02
 ### :sparkles: New Features
 - [`ce5de10`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/ce5de104ac05d1ee2acc4b2d4e36d148e63145ba) - **React MUI**: Add inexact label search *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
@@ -100,3 +118,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.1.4]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.3...v0.1.4
 [v0.1.5]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.4...v0.1.5
 [v0.2.0]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.5...v0.2.0
+[v0.2.1]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.2.0...v0.2.1
