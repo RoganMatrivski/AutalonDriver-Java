@@ -4,6 +4,7 @@ import com.nawadata.nfunittestlibrary.WebDriverExtended
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.interactions.Actions
 import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -32,8 +33,16 @@ class DateInput(
             val formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
             formatter.format(randomDate)
             val componentid = dateField.getAttribute("data-componentid")
+
+            // Fix popups (probably)
+            // Click trigger, click to the side, and then click the trigger again.
+            // Dumb AF, but it works, so why not.
             driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
                 .click()
+            Actions(driver).moveByOffset(200, 0).click().perform()
+            driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
+                .click()
+
             val datePickerComponent =
                 driver.findElement(By.id(String.format("%s-picker", componentid)))
             datePickerComponent.findElement(
