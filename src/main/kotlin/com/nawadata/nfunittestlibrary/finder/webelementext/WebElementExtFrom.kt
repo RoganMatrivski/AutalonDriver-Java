@@ -97,4 +97,30 @@ class WebElementExtFrom(
     fun waitUntilXPathVisible(
         xpath: String
     ) = this.byXPath(xpath).untilElementVisible().highlightAndGetElement()
+
+    @JvmOverloads
+    fun waitUntilStringInteractable(
+        string: String,
+        by: Enums.ByOption = Enums.ByOption.Text,
+        tag: String = "*",
+        exactText: Boolean = false,
+        index: Int = 1
+    ) = this.byString(string, by, tag, exactText, index).untilElementInteractable().highlightAndGetElement()
+
+    fun waitUntilXPathInteractable(
+        xpath: String
+    ) = this.byXPath(xpath).untilElementInteractable().highlightAndGetElement()
+
+    @JvmOverloads
+    fun waitUntilStringInvisible(
+        string: String,
+        by: Enums.ByOption = Enums.ByOption.Text,
+        tag: String = "*",
+        exactText: Boolean = false,
+        index: Int = 1
+    ) = this.byString(string, by, tag, exactText, index).untilElementInvisible()
+
+    fun waitUntilXPathInvisible(
+        xpath: String
+    ) = this.byXPath(xpath).untilElementInvisible()
 }
