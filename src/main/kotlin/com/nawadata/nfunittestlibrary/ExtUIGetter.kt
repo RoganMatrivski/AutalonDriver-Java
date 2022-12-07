@@ -26,7 +26,7 @@ class ExtUIGetter(
             else
                 "text() = '$label'"
 
-        val xpathRoot = if (webElement == null) "descendant::" else "//"
+        val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el.findElement(
@@ -45,7 +45,7 @@ class ExtUIGetter(
             else
                 "text() = '$label'"
 
-        val xpathRoot = if (webElement == null) "descendant::" else "//"
+        val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el
@@ -65,7 +65,7 @@ class ExtUIGetter(
             else
                 "text() = '$title'"
 
-        val xpathRoot = if (webElement == null) "descendant::" else "//"
+        val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el
@@ -87,7 +87,7 @@ class ExtUIGetter(
             else
                 "text() = '$title'"
 
-        val xpathRoot = if (webElement == null) "descendant::" else "//"
+        val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
             driver, driverExt, el
@@ -107,7 +107,7 @@ class ExtUIGetter(
             else
                 "text() = '$columnName'"
 
-        val xpathRoot = if (webElement == null) "descendant::" else "//"
+        val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         val xpathQuery = "" +
                 "$xpathRoot*[contains(@class, 'x-grid-header-ct')]" +
