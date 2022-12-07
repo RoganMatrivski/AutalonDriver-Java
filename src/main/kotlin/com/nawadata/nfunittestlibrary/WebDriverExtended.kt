@@ -14,6 +14,7 @@ class   WebDriverExtended (
     private val driver: WebDriver
         ) {
     private var jsExec: JavascriptExecutor? = null
+    var timeout = Consts.defaultTimeout.seconds
 
     fun wait(delay: Duration) {
         val now = LocalDateTime.now()
@@ -43,7 +44,7 @@ class   WebDriverExtended (
 
     fun waitUntilVisible(by: By): WebElement? {
         return try {
-            WebDriverWait(driver, Consts.defaultTimeout.seconds)
+            WebDriverWait(driver, timeout)
                 .until(ExpectedConditions.visibilityOfElementLocated(by))
         } catch (ex: TimeoutException) {
             handleElementTimeoutException(ex, by)
@@ -53,7 +54,7 @@ class   WebDriverExtended (
 
     fun waitUntilInvisible(by: By): Boolean? {
         return try {
-            WebDriverWait(driver, Consts.defaultTimeout.seconds)
+            WebDriverWait(driver, timeout)
                 .until(ExpectedConditions.invisibilityOfElementLocated(by))
         } catch (ex: TimeoutException) {
             handleElementTimeoutException(ex, by)
@@ -76,7 +77,7 @@ class   WebDriverExtended (
         }
 
     fun waitUntilFrameLoads(by: By): WebDriver =
-        WebDriverWait(driver, Consts.defaultTimeout.seconds)
+        WebDriverWait(driver, timeout)
             .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by))
 
     fun scrollToElement(element: WebElement) =

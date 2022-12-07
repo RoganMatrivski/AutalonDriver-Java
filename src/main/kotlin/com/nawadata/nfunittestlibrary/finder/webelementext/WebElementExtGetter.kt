@@ -1,6 +1,5 @@
 package com.nawadata.nfunittestlibrary.finder.webelementext
 
-import com.nawadata.nfunittestlibrary.Consts
 import com.nawadata.nfunittestlibrary.WebDriverExtended
 import com.nawadata.nfunittestlibrary.WebElementExtended
 import org.openqa.selenium.By
@@ -20,7 +19,7 @@ class WebElementExtGetter(
     fun untilElementVisible(): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, driverExt, WebDriverWait(driver, Consts.defaultTimeout.seconds)
+                driver, driverExt, WebDriverWait(driver, driverExt.timeout)
                     .until(ExpectedConditions.visibilityOfElementLocated(by))
             )
         } catch (ex: TimeoutException) {
@@ -30,7 +29,7 @@ class WebElementExtGetter(
 
     fun untilElementInvisible(): Boolean {
         return try {
-            WebDriverWait(driver, Consts.defaultTimeout.seconds)
+            WebDriverWait(driver, driverExt.timeout)
                 .until(ExpectedConditions.invisibilityOfElementLocated(by))
         } catch (ex: TimeoutException) {
             throw ex
@@ -40,7 +39,7 @@ class WebElementExtGetter(
     fun untilElementInteractable(): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, driverExt, WebDriverWait(driver, Consts.defaultTimeout.seconds)
+                driver, driverExt, WebDriverWait(driver, driverExt.timeout)
                     .until(ExpectedConditions.elementToBeClickable(by))
             )
         } catch (ex: TimeoutException) {

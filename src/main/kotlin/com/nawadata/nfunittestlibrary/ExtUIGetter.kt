@@ -117,7 +117,7 @@ class ExtUIGetter(
                 "//input"
 
         val elementSearch = el.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, Consts.defaultTimeout.seconds)
+        WebDriverWait(driver, driverExt.timeout)
             .until(ExpectedConditions.elementToBeClickable(elementSearch))
 
         return TextboxInput(driver, driverExt, elementSearch)
@@ -139,7 +139,7 @@ class ExtUIGetter(
         val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
 
         val elementSearch = el.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, Consts.defaultTimeout.seconds)
+        WebDriverWait(driver, driverExt.timeout)
             .until(ExpectedConditions.visibilityOf(elementSearch))
 
         return TableRow(driver, driverExt, elementSearch)
