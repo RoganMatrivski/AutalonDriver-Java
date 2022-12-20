@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary.finder.webelementext
 
+import com.nawadata.nfunittestlibrary.Consts
 import com.nawadata.nfunittestlibrary.Enums
 import com.nawadata.nfunittestlibrary.Tools
 import com.nawadata.nfunittestlibrary.WebDriverExtended
@@ -91,12 +92,13 @@ class WebElementExtFrom(
         by: Enums.ByOption = Enums.ByOption.Text,
         tag: String = "*",
         exactText: Boolean = false,
-        index: Int = 1
-    ) = this.byString(string, by, tag, exactText, index).untilElementVisible().highlightAndGetElement()
+        index: Int = 1, timeout: Long = driverExt.timeout
+    ) = this.byString(string, by, tag, exactText, index).untilElementVisible(timeout).highlightAndGetElement()
 
+    @JvmOverloads
     fun waitUntilXPathVisible(
-        xpath: String
-    ) = this.byXPath(xpath).untilElementVisible().highlightAndGetElement()
+        xpath: String, timeout: Long = driverExt.timeout
+    ) = this.byXPath(xpath).untilElementVisible(timeout).highlightAndGetElement()
 
     @JvmOverloads
     fun waitUntilStringInteractable(
@@ -104,12 +106,13 @@ class WebElementExtFrom(
         by: Enums.ByOption = Enums.ByOption.Text,
         tag: String = "*",
         exactText: Boolean = false,
-        index: Int = 1
-    ) = this.byString(string, by, tag, exactText, index).untilElementInteractable().highlightAndGetElement()
+        index: Int = 1, timeout: Long = driverExt.timeout
+    ) = this.byString(string, by, tag, exactText, index).untilElementInteractable(timeout).highlightAndGetElement()
 
+    @JvmOverloads
     fun waitUntilXPathInteractable(
-        xpath: String
-    ) = this.byXPath(xpath).untilElementInteractable().highlightAndGetElement()
+        xpath: String, timeout: Long = driverExt.timeout
+    ) = this.byXPath(xpath).untilElementInteractable(timeout).highlightAndGetElement()
 
     @JvmOverloads
     fun waitUntilStringInvisible(
@@ -117,10 +120,11 @@ class WebElementExtFrom(
         by: Enums.ByOption = Enums.ByOption.Text,
         tag: String = "*",
         exactText: Boolean = false,
-        index: Int = 1
-    ) = this.byString(string, by, tag, exactText, index).untilElementInvisible()
+        index: Int = 1, timeout: Long = driverExt.timeout
+    ) = this.byString(string, by, tag, exactText, index).untilElementInvisible(timeout)
 
+    @JvmOverloads
     fun waitUntilXPathInvisible(
-        xpath: String
-    ) = this.byXPath(xpath).untilElementInvisible()
+        xpath: String, timeout: Long = driverExt.timeout
+    ) = this.byXPath(xpath).untilElementInvisible(timeout)
 }

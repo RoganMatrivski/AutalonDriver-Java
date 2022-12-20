@@ -42,9 +42,10 @@ class   WebDriverExtended (
         throw ex
     }
 
-    fun waitUntilVisible(by: By): WebElement? {
+    @JvmOverloads
+    fun waitUntilVisible(by: By, customTimeout: Long = timeout): WebElement? {
         return try {
-            WebDriverWait(driver, timeout)
+            WebDriverWait(driver, customTimeout)
                 .until(ExpectedConditions.visibilityOfElementLocated(by))
         } catch (ex: TimeoutException) {
             handleElementTimeoutException(ex, by)
@@ -52,9 +53,10 @@ class   WebDriverExtended (
         }
     }
 
-    fun waitUntilInvisible(by: By): Boolean? {
+    @JvmOverloads
+    fun waitUntilInvisible(by: By, customTimeout: Long = timeout): Boolean? {
         return try {
-            WebDriverWait(driver, timeout)
+            WebDriverWait(driver, customTimeout)
                 .until(ExpectedConditions.invisibilityOfElementLocated(by))
         } catch (ex: TimeoutException) {
             handleElementTimeoutException(ex, by)
@@ -76,8 +78,9 @@ class   WebDriverExtended (
             return jsExec as JavascriptExecutor
         }
 
-    fun waitUntilFrameLoads(by: By): WebDriver =
-        WebDriverWait(driver, timeout)
+    @JvmOverloads
+    fun waitUntilFrameLoads(by: By, customTimeout: Long = timeout): WebDriver =
+        WebDriverWait(driver, customTimeout)
             .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by))
 
     fun scrollToElement(element: WebElement) =

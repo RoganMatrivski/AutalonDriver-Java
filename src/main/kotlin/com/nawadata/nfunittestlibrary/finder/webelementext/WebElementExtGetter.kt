@@ -16,10 +16,11 @@ class WebElementExtGetter(
 ) {
     fun now(): WebElement = driver.findElement(by)
 
-    fun untilElementVisible(): WebElementExtended {
+    @JvmOverloads
+    fun untilElementVisible(customTimeout: Long = driverExt.timeout): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, driverExt, WebDriverWait(driver, driverExt.timeout)
+                driver, driverExt, WebDriverWait(driver, customTimeout)
                     .until(ExpectedConditions.visibilityOfElementLocated(by))
             )
         } catch (ex: TimeoutException) {
@@ -27,19 +28,21 @@ class WebElementExtGetter(
         }
     }
 
-    fun untilElementInvisible(): Boolean {
+    @JvmOverloads
+    fun untilElementInvisible(customTimeout: Long = driverExt.timeout): Boolean {
         return try {
-            WebDriverWait(driver, driverExt.timeout)
+            WebDriverWait(driver, customTimeout)
                 .until(ExpectedConditions.invisibilityOfElementLocated(by))
         } catch (ex: TimeoutException) {
             throw ex
         }
     }
 
-    fun untilElementInteractable(): WebElementExtended {
+    @JvmOverloads
+    fun untilElementInteractable(customTimeout: Long = driverExt.timeout): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, driverExt, WebDriverWait(driver, driverExt.timeout)
+                driver, driverExt, WebDriverWait(driver, customTimeout)
                     .until(ExpectedConditions.elementToBeClickable(by))
             )
         } catch (ex: TimeoutException) {
