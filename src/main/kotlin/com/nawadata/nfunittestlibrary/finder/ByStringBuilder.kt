@@ -32,10 +32,10 @@ class ByStringBuilder private constructor(
         val driver: WebDriver,
         var string: String,
     ) {
-        var by: Enums.ByOption = Enums.ByOption.Text;
-        var tag: String = "*";
-        var exactText: Boolean = false;
-        var index: Int = 1;
+        var by: Enums.ByOption = Enums.ByOption.Text
+        var tag: String = "*"
+        var exactText: Boolean = false
+        var index: Int = 1
 
         fun string(string: String) = apply { this.string = string }
         fun by(by: Enums.ByOption) = apply { this.by = by }
