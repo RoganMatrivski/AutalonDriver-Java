@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.3.0] - 2023-02-14
+### :sparkles: New Features
+- [`8e9a8c5`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/8e9a8c53d3dbe378782c212c1455f8f03ae0dfce) - Add the rest of wait shortcut functions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`36d66e4`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/36d66e487ebcfd39ecc202ca86825df8c053509c) - Add timeout override for each wait functions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`0b0415e`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/0b0415e8dfb62bce3d174ea6a74d5262fddc336e) - Add new API which uses extension functions *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :bug: Bug Fixes
+- [`37c1712`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/37c1712cbb071e066d64788a3fe0fb7e51c61f25) - waitUntilStringVisible didn't use JvmOverloads *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`5359ec0`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/5359ec02e596c1b02b8c43d2868850892b00ca7a) - Get last index by negative numbers was offset by one *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`a92422d`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/a92422dbea938f27460b9d8710a65533fcf539fc) - Incorrect XPath root *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`812dd5f`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/812dd5feec6e594abbf2410c5bf8edf899645b60) - Change timeout behaviour to use global version *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+### :wrench: Chores
+- [`69b2c3c`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/69b2c3c1c9a439af110ca78a16c14afbd1f4f1b7) - Migrate v2 package to root *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+- [`23aad16`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/23aad161e332b0d93b6ad186cd8c11fef562a771) - Fix Kotlin lints *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
+
+
 ## [v0.2.1] - 2022-12-05
 ### :sparkles: New Features
 - [`97c72b8`](https://github.com/RoganMatrivski/AutalonDriver-Java/commit/97c72b8757673d3733753e063ed34bd9c5148419) - **Web Element**: Add index parameter *(commit by [@RoganMatrivski](https://github.com/RoganMatrivski))*
@@ -119,3 +136,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.1.5]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.4...v0.1.5
 [v0.2.0]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.1.5...v0.2.0
 [v0.2.1]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.2.0...v0.2.1
+[v0.3.0]: https://github.com/RoganMatrivski/AutalonDriver-Java/compare/v0.2.1...v0.3.0
