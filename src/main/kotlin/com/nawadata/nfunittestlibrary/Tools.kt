@@ -20,7 +20,7 @@ object Tools {
         "translate($attribute, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"
 
     @JvmStatic fun xpathInexactContains(a: String, b: String) =
-        "contains(${xpathToLower(a)}, '${b.lowercase(java.util.Locale.getDefault())}')"
+        "contains(${xpathToLower(a)}, '${b.lowercase(Locale.getDefault())}')"
 
     @JvmStatic @JvmOverloads
     fun getElementContainingStringExact(text: String, by: Enums.ByOption, tag: String = "*", index: Int = 1): By =

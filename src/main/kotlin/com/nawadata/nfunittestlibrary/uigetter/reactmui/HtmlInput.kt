@@ -1,6 +1,6 @@
-package com.nawadata.nfunittestlibrary.reactmui
+package com.nawadata.nfunittestlibrary.uigetter.reactmui
 
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+
 import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
@@ -9,11 +9,9 @@ import org.openqa.selenium.interactions.Actions
 
 class HtmlInput(
     private val driver: WebDriver,
-    driverExt: WebDriverExtended,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    driverExt,
     element,
 ) {
     fun clearText(): HtmlInput {

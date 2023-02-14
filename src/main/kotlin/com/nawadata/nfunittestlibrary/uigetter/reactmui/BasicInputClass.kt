@@ -1,6 +1,6 @@
-package com.nawadata.nfunittestlibrary.extui
+package com.nawadata.nfunittestlibrary.uigetter.reactmui
 
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement
  */
 open class BasicInputClass(
     driver: WebDriver,
-    driverExt: WebDriverExtended,
     element: WebElement,
     componentId: String = ""
 )

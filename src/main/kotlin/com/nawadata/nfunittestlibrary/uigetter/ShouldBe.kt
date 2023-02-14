@@ -1,7 +1,12 @@
-package com.nawadata.nfunittestlibrary
+package com.nawadata.nfunittestlibrary.uigetter
 
 import com.nawadata.nfunittestlibrary.exceptions.IncorrectTypeException
-import com.nawadata.nfunittestlibrary.extui.*
+import com.nawadata.nfunittestlibrary.uigetter.extui.DateInput
+import com.nawadata.nfunittestlibrary.uigetter.extui.DropdownInput
+import com.nawadata.nfunittestlibrary.uigetter.extui.HtmlInput
+import com.nawadata.nfunittestlibrary.uigetter.extui.NumberTextboxInput
+import com.nawadata.nfunittestlibrary.uigetter.extui.RadioInput
+import com.nawadata.nfunittestlibrary.uigetter.extui.TextboxInput
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.WebDriver
@@ -12,7 +17,6 @@ import org.openqa.selenium.WebElement
  */
 class ShouldBe(
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended,
     private val element: WebElement
 ) {
     /**
@@ -27,7 +31,7 @@ class ShouldBe(
             val radioInputEl = element.findElement(
                 By.xpath("ancestor::div[contains(@class, 'x-container x-form-checkboxgroup')]")
             )
-            RadioInput(driver, driverExt, radioInputEl)
+            RadioInput(driver, radioInputEl)
         } catch (e: NoSuchElementException) {
             throw IncorrectTypeException("Input element is not a radio", e)
         }
@@ -50,7 +54,7 @@ class ShouldBe(
                             + " and @aria-autocomplete='list']"
                 )
             )
-            DropdownInput(driver, driverExt, dropdownInputEl)
+            DropdownInput(driver, dropdownInputEl)
         } catch (e: NoSuchElementException) {
             throw IncorrectTypeException("Input element is not a dropdown", e)
         }
@@ -68,7 +72,7 @@ class ShouldBe(
             val textboxInputEl = element.findElement(
                 By.xpath("(../input[@role='textbox' and not(@aria-owns)] | ../textarea)")
             )
-            TextboxInput(driver, driverExt, textboxInputEl)
+            TextboxInput(driver, textboxInputEl)
         } catch (e: NoSuchElementException) {
             throw IncorrectTypeException("Input element is not a textbox", e)
         }
@@ -85,7 +89,7 @@ class ShouldBe(
         return try {
             val numberTextboxInputEl =
                 element.findElement(By.xpath("../input[@role='spinbutton']"))
-            NumberTextboxInput(driver, driverExt, numberTextboxInputEl)
+            NumberTextboxInput(driver, numberTextboxInputEl)
         } catch (e: NoSuchElementException) {
             throw IncorrectTypeException("Input element is not a number", e)
         }
@@ -107,7 +111,7 @@ class ShouldBe(
                             + " and @aria-autocomplete='none']"
                 )
             )
-            DateInput(driver, driverExt, dateInputEl)
+            DateInput(driver, dateInputEl)
         } catch (e: NoSuchElementException) {
             throw IncorrectTypeException("Input element is not a date", e)
         }
@@ -123,13 +127,12 @@ class ShouldBe(
     fun htmlEditor(): HtmlInput {
         return try {
             val htmlIframe = driver.switchTo().frame(element)
-            val htmlIframeExt = WebDriverExtended(htmlIframe)
             val htmlInputEl = htmlIframe.findElement(
                 By.xpath(
                     "//body"
                 )
             )
-            HtmlInput(htmlIframe, htmlIframeExt, htmlInputEl)
+            HtmlInput(htmlIframe, htmlInputEl)
         } catch (e: NoSuchElementException) {
             throw IncorrectTypeException("Input element is not a date", e)
         }

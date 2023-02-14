@@ -1,18 +1,16 @@
-package com.nawadata.nfunittestlibrary.extui
+package com.nawadata.nfunittestlibrary.uigetter.extui
 
 import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+import com.nawadata.nfunittestlibrary.scrollToElement
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
 class RadioInput(
-    driver: WebDriver,
-    private val driverExt: WebDriverExtended,
+    val driver: WebDriver,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    driverExt,
     element,
     element.getAttribute("data-componentid")
 ) {
@@ -56,7 +54,7 @@ class RadioInput(
         )
         require(options.isNotEmpty()) { "Element search returns empty." }
         val selected = options[0]
-        driverExt.scrollToElement(selected)
+        driver.scrollToElement(selected)
         selected.click()
         return this
     }

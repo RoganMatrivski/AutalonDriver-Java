@@ -1,7 +1,8 @@
-package com.nawadata.nfunittestlibrary.reactmui
+package com.nawadata.nfunittestlibrary.uigetter.reactmui
 
 import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+import com.nawadata.nfunittestlibrary.getElement
+
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -13,12 +14,10 @@ import java.util.*
 import kotlin.math.abs
 
 class DateInput(
-    driver: WebDriver,
-    private val driverExt: WebDriverExtended,
+    private val driver: WebDriver,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    driverExt,
     element,
 ) {
     private fun monthStringToInt(month: String) =
@@ -37,11 +36,11 @@ class DateInput(
         val dateDialogXPath = "//*[@class = 'MuiDialog-root']"
 
         // Select year
-        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[contains(@class, 'MuiToolbar-root')]/descendant::h6").untilElementInteractable().click()
-        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class='MuiPickersYearSelection-container']/*[text() = '${date.year}']").untilElementInteractable().click()
+        driver.getElement().byXPath("$dateDialogXPath/descendant::*[contains(@class, 'MuiToolbar-root')]/descendant::h6").untilElementInteractable().click()
+        driver.getElement().byXPath("$dateDialogXPath/descendant::*[@class='MuiPickersYearSelection-container']/*[text() = '${date.year}']").untilElementInteractable().click()
 
         // Get currently selected month
-        val headerText = driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/descendant::p").untilElementInteractable().getWebElement().text
+        val headerText = driver.getElement().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/descendant::p").untilElementInteractable().getWebElement().text
         val monthText = headerText.split(" ")[0]
         val currentMonth = monthStringToInt(monthText)
         val selectedMonth = date.monthValue
@@ -53,18 +52,18 @@ class DateInput(
         when {
             stepAmount < 0 -> {
                 repeat(abs(stepAmount)) {
-                    driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/button[1]").untilElementInteractable().click()
+                    driver.getElement().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/button[1]").untilElementInteractable().click()
                 }
             }
 
             stepAmount > 0 -> {
                 repeat(stepAmount) {
-                    driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/button[2]").untilElementInteractable().click()
+                    driver.getElement().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendarHeader-switchHeader']/button[2]").untilElementInteractable().click()
                 }
             }
         }
 
-        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendar-week']/descendant::p[text() = '${date.dayOfMonth}']").untilElementInteractable().click()
+        driver.getElement().byXPath("$dateDialogXPath/descendant::*[@class = 'MuiPickersCalendar-week']/descendant::p[text() = '${date.dayOfMonth}']").untilElementInteractable().click()
     }
 
     fun sendText(text: String): DateInput {

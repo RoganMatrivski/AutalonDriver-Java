@@ -1,7 +1,10 @@
-package com.nawadata.nfunittestlibrary.extui
+package com.nawadata.nfunittestlibrary.uigetter.reactmui
 
 import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+import com.nawadata.nfunittestlibrary.scrollToElement
+import com.nawadata.nfunittestlibrary.*
+import com.nawadata.nfunittestlibrary.waitUntilVisible
+
 import org.openqa.selenium.By
 import org.openqa.selenium.StaleElementReferenceException
 import org.openqa.selenium.WebDriver
@@ -9,17 +12,15 @@ import org.openqa.selenium.WebElement
 
 class DropdownInput (
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended,
     private val element: WebElement,
-    private val componentId: String = element.getAttribute("data-componentid"),
-) : BasicInputClass(
-    driver,
-    driverExt,
+    private val componentId: String = element.getAttribute("for"),
+    ) : BasicInputClass(
+        driver,
     element,
-    element.getAttribute("data-componentid")
+    element.getAttribute("for")
 ) {
-    private val options: List<WebElement>
-        get() = driver.findElements(By.xpath("//ul[@id = '$componentId-picker-listEl']/li"))
+    private val options: Array<WebElement>
+        get() = driver.findElements(By.xpath("//ul[@id = '$componentId-popup']/li")).toTypedArray()
 
     private fun pickOption(index: Int): WebElement {
         val options = options
@@ -30,21 +31,25 @@ class DropdownInput (
             )
         }
         val selectedOption: WebElement = if (index < 0) {
-            Tools.getRandomElement<Any>(options.toTypedArray()) as WebElement
+            Tools.getRandomElement(options)
         } else {
             options[index]
         }
-        driverExt.scrollToElement(selectedOption)
+        driver.scrollToElement(selectedOption)
         return selectedOption
     }
 
     fun selectRandomElement(): DropdownInput {
-        driver.findElement(By.id("$componentId-trigger-picker")).click()
+        element.findElement(By.xpath(
+            "following::*[" +
+                    Tools.xpathInexactContains("@class", "endAdornment") +
+                    "]/button[@title = 'Open']"))
+            .click()
         var tries = 5
 
         while (tries-- > 0) {
             try {
-                driverExt.waitUntilVisible(By.id("$componentId-picker-listEl"))
+                driver.waitUntilVisible(By.id("$componentId-popup"))
                 val selectedOption = pickOption(-1)
                 selectedOption.click()
                 break
@@ -54,16 +59,21 @@ class DropdownInput (
         return this
     }
 
+    @Suppress("unused")
     fun selectElementOnIndex(index: Int): DropdownInput {
-        driver.findElement(By.id("$componentId-trigger-picker")).click()
+        element.findElement(By.xpath(
+            "following::*[" +
+                    Tools.xpathInexactContains("@class", "endAdornment") +
+                    "]/button[@title = 'Open']"))
+            .click()
 
         var tries = 5
 
         while (tries-- > 0) {
             try {
-                driverExt.waitUntilVisible(By.id("$componentId-picker-listEl"))
+                driver.waitUntilVisible(By.id("$componentId-popup"))
                 val selectedOption = pickOption(index)
-                driverExt.scrollToElement(selectedOption)
+                driver.scrollToElement(selectedOption)
                 selectedOption.click()
                 break
             } catch (_: StaleElementReferenceException) {
@@ -72,34 +82,43 @@ class DropdownInput (
         return this
     }
 
+    @Suppress("unused")
     fun clearInput(): DropdownInput {
         try {
-            driver.findElement(By.id("$componentId-trigger-_trigger1")).click()
+            element.findElement(By.xpath(
+                "following::*[" +
+                        Tools.xpathInexactContains("@class", "endAdornment") +
+                        "]/button[@title = 'Clear']"))
+                .click()
         } catch (e: Exception) {
             //TODO: handle exception
         }
         return this
     }
 
-    // TODO: Add Exact variant 
+    // TODO: Add Inexact variant
     fun selectElementFromText(text: String): DropdownInput {
-        driver.findElement(By.id("$componentId-trigger-picker")).click()
+        element.findElement(By.xpath(
+            "following::*[" +
+                    Tools.xpathInexactContains("@class", "endAdornment") +
+                    "]/button[@title = 'Open']"))
+            .click()
 
         var tries = 5
 
         while (tries-- > 0) {
             try {
-                driverExt.waitUntilVisible(By.id("$componentId-picker-listEl"))
+                driver.waitUntilVisible(By.id("$componentId-popup"))
                 val options = element.findElements(
                     By.xpath(
-                        "//ul[@id = '$componentId-picker-listEl']/li[contains(text(), '$text')]"
+                        "//ul[@id = '$componentId-popup']/li[contains(text(), '$text')]"
                     )
                 )
                 require(options.isNotEmpty()) { "Element search returns empty." }
                 val selected = options[0]
 
                 println(selected.getAttribute("id"))
-                driverExt.scrollToElement(selected)
+                driver.scrollToElement(selected)
                 selected.click()
 
                 break

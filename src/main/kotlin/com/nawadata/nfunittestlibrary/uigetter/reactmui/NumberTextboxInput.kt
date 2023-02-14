@@ -1,6 +1,6 @@
-package com.nawadata.nfunittestlibrary.extui
+package com.nawadata.nfunittestlibrary.uigetter.reactmui
 
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
@@ -9,11 +9,9 @@ import org.openqa.selenium.WebElement
  */
 class NumberTextboxInput(
     driver: WebDriver,
-    driverExt: WebDriverExtended,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    driverExt,
     element,
     element.getAttribute("data-componentid")
 ) {

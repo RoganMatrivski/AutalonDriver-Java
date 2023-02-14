@@ -1,18 +1,17 @@
-package com.nawadata.nfunittestlibrary.reactmui
+package com.nawadata.nfunittestlibrary.uigetter.reactmui
 
 import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+import com.nawadata.nfunittestlibrary.scrollToElement
+
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
 class RadioInput(
-    driver: WebDriver,
-    private val driverExt: WebDriverExtended,
+    private val driver: WebDriver,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    driverExt,
     element,
 ) {
 
@@ -45,7 +44,7 @@ class RadioInput(
         val option = options.find { webElement ->
             webElement.findElements(By.xpath("descendant::*[text()='$text']")).isNotEmpty()
         }!!
-        driverExt.scrollToElement(option)
+        driver.scrollToElement(option)
         option.click()
         return this
     }

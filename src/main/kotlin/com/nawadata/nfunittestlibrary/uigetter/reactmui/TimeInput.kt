@@ -1,7 +1,8 @@
-package com.nawadata.nfunittestlibrary.reactmui
+package com.nawadata.nfunittestlibrary.uigetter.reactmui
 
 import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.WebDriverExtended
+import com.nawadata.nfunittestlibrary.getElement
+
 import org.openqa.selenium.By
 import org.openqa.selenium.Point
 import org.openqa.selenium.WebDriver
@@ -14,11 +15,9 @@ import kotlin.math.sin
 
 class TimeInput(
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    driverExt,
     element,
 ) {
     private fun getElementCenterCoordinate(element: WebElement): Point {
@@ -41,6 +40,11 @@ class TimeInput(
         return Point(x.toInt(), y.toInt() - 1) // Don't click on the borders
     }
 
+    fun getText(): String {
+        val el = element.findElement(By.xpath(".//ancestor::*[${Tools.xpathInexactContains("@class", "MuiFormControl-root")}]/descendant::input"));
+
+        return el.getAttribute("value");
+    }
 
     private fun fillTime(time: LocalTime) {
         // Click input
@@ -50,13 +54,13 @@ class TimeInput(
         val dateDialogXPath = "//*[@class = 'MuiDialog-root']"
 
         // Select hour
-        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[contains(@class, 'MuiToolbar-root')]/descendant::h2").untilElementInteractable().click()
-        val hourElement = driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::*[@class =  'MuiPickersClock-clock']/span[text() = '${if (time.hour == 0) {"00"} else {time.hour}}']").untilElementInteractable()
+        driver.getElement().byXPath("$dateDialogXPath/descendant::*[contains(@class, 'MuiToolbar-root')]/descendant::h2").untilElementInteractable().click()
+        val hourElement = driver.getElement().byXPath("$dateDialogXPath/descendant::*[@class =  'MuiPickersClock-clock']/span[text() = '${if (time.hour == 0) {"00"} else {time.hour}}']").untilElementInteractable()
         hourElement.highlightAndGetElement()
         Actions(driver).moveToElement(hourElement.getWebElement()).click().perform()
 
         // Get center pin coordinates
-        val centerPin = driverExt.getElementExtended().byXPath("//*[@class = 'MuiPickersClock-pin']").now()
+        val centerPin = driver.getElement().byXPath("//*[@class = 'MuiPickersClock-pin']").now()
         val centerPinPos = getElementCenterCoordinate(centerPin)
 
         // Get position to click
@@ -70,7 +74,7 @@ class TimeInput(
             .click()
             .perform()
 
-        driverExt.getElementExtended().byXPath("$dateDialogXPath/descendant::button/span[text() = 'OK']").untilElementInteractable().click()
+        driver.getElement().byXPath("$dateDialogXPath/descendant::button/span[text() = 'OK']").untilElementInteractable().click()
     }
 
     fun sendText(text: String): TimeInput {

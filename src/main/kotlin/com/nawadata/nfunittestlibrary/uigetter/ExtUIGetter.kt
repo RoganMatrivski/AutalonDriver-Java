@@ -1,7 +1,9 @@
-package com.nawadata.nfunittestlibrary
+package com.nawadata.nfunittestlibrary.uigetter
 
-import com.nawadata.nfunittestlibrary.extui.TableRow
-import com.nawadata.nfunittestlibrary.extui.TextboxInput
+import com.nawadata.nfunittestlibrary.Consts
+import com.nawadata.nfunittestlibrary.Tools
+import com.nawadata.nfunittestlibrary.uigetter.extui.TableRow
+import com.nawadata.nfunittestlibrary.uigetter.extui.TextboxInput
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -10,13 +12,11 @@ import org.openqa.selenium.support.ui.WebDriverWait
 
 class ExtUIGetter(
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended = WebDriverExtended(driver),
     private val webElement: WebElement?
 ) {
-    constructor(driver: WebDriver) : this(driver, WebDriverExtended(driver), null)
-    constructor(driver: WebDriver, driverExt: WebDriverExtended) : this(driver, driverExt, null)
+    constructor(driver: WebDriver) : this(driver, null)
 
-    fun shouldBe() = ShouldBe(driver, driverExt, webElement!!) // If there's no webElement, just throw exception
+    fun shouldBe() = ShouldBe(driver, webElement!!) // If there's no webElement, just throw exception
 
     @JvmOverloads
     fun getInputFromLabel(label: String, inexactLabel: Boolean = false): ExtUIGetter {
@@ -29,7 +29,7 @@ class ExtUIGetter(
         val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
-            driver, driverExt, el.findElement(
+            driver, el.findElement(
                 By.xpath(
                     xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']"
                 )
@@ -48,7 +48,7 @@ class ExtUIGetter(
         val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
-            driver, driverExt, el
+            driver, el
                 .findElement(
                     By.xpath(
                         xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='iframeEl']"
@@ -68,12 +68,12 @@ class ExtUIGetter(
         val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
-            driver, driverExt, el
+            driver, el
                 .findElement(
                     By.xpath(
                         xpathRoot +
-                            "div[$elementGetterXPath and @data-ref='textEl']/"
-                            + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]"
+                                "div[$elementGetterXPath and @data-ref='textEl']/"
+                                + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]"
                     )
                 )
         )
@@ -90,7 +90,7 @@ class ExtUIGetter(
         val xpathRoot = if (webElement != null) "descendant::" else "//"
         val el = webElement ?: driver
         return ExtUIGetter(
-            driver, driverExt, el
+            driver, el
                 .findElement(
                     By.xpath(
                         xpathRoot + "div[$elementGetterXPath]//ancestor::div[contains(@class, 'x-panel x-panel-default')]"
@@ -117,10 +117,10 @@ class ExtUIGetter(
                 "//input"
 
         val elementSearch = el.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, driverExt.timeout)
+        WebDriverWait(driver, Consts.defaultTimeout.seconds)
             .until(ExpectedConditions.elementToBeClickable(elementSearch))
 
-        return TextboxInput(driver, driverExt, elementSearch)
+        return TextboxInput(driver, elementSearch)
     }
 
     fun getRowElementByIndex(nonZeroIndex: Int): TableRow {
@@ -139,9 +139,9 @@ class ExtUIGetter(
         val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
 
         val elementSearch = el.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, driverExt.timeout)
+        WebDriverWait(driver, Consts.defaultTimeout.seconds)
             .until(ExpectedConditions.visibilityOf(elementSearch))
 
-        return TableRow(driver, driverExt, elementSearch)
+        return TableRow(driver, elementSearch)
     }
 }

@@ -1,13 +1,11 @@
-package com.nawadata.nfunittestlibrary.extui
+package com.nawadata.nfunittestlibrary.uigetter.extui
 
-import com.nawadata.nfunittestlibrary.WebDriverExtended
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
 class TableRow (
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended,
     private val element: WebElement,
 ) {
     fun getElement() = element

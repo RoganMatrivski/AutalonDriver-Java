@@ -1,7 +1,7 @@
-package com.nawadata.nfunittestlibrary.extui
+package com.nawadata.nfunittestlibrary.uigetter.extui
 
-import com.nawadata.nfunittestlibrary.WebDriverExtended
 import org.openqa.selenium.By
+import com.nawadata.nfunittestlibrary.wait
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
@@ -11,11 +11,9 @@ import java.time.format.DateTimeFormatter
 
 class DateInput(
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended,
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    driverExt,
     element,
     element.getAttribute("data-componentid")
 ) {
@@ -23,7 +21,6 @@ class DateInput(
         @JvmStatic
         fun fillDate(
             driver: WebDriver,
-            driverExt: WebDriverExtended,
             dateField: WebElement,
             randomDate: LocalDate
         ) {
@@ -58,7 +55,7 @@ class DateInput(
                 yearPickerComponent.findElement(By.xpath("descendant::*[@data-ref='nextEl']"))
 
             // Wait for the elements to be interactable
-            driverExt.wait(Duration.ofMillis(400))
+            driver.wait(Duration.ofMillis(400))
             while (true) {
                 val earliestYearAvailableStr = yearPickerComponent.findElement(
                     By.xpath("*/*[@class='x-monthpicker-item-inner']")
@@ -93,7 +90,7 @@ class DateInput(
             ).click()
 
             // Wait for the elements to be interactable
-            driverExt.wait(Duration.ofMillis(400))
+            driver.wait(Duration.ofMillis(400))
             val dateListParent = datePickerComponent.findElement(
                 By.xpath("descendant::*[@data-ref='innerEl']/table/tbody")
             )
@@ -119,7 +116,7 @@ class DateInput(
                 e
             )
         }
-        fillDate(driver, driverExt, element, dateText)
+        fillDate(driver, element, dateText)
         return this
     }
 }

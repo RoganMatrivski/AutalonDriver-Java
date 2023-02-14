@@ -6,13 +6,12 @@ import java.time.Duration
 
 class WebElementExtended(
     private val driver: WebDriver,
-    private val driverExt: WebDriverExtended = WebDriverExtended(driver),
     private val webElement: WebElement?
 ) {
     fun getWebElement() = webElement!!
 
     fun highlightAndGetElement(): WebElement {
-        driverExt.jsExecutor.executeScript("arguments[0].style.outline='4px solid red'", webElement!!)
+        driver.getJsExecutor().executeScript("arguments[0].style.outline='4px solid red'", webElement!!)
         return webElement
     }
 
@@ -27,7 +26,7 @@ class WebElementExtended(
             } catch (e: Exception) {
                 lastException = e
                 retryCount--
-                driverExt.wait(Duration.ofMillis(200))
+                driver.wait(Duration.ofMillis(200))
             }
         }
 
@@ -44,7 +43,7 @@ class WebElementExtended(
             } catch (e: Exception) {
                 lastException = e
                 retryCount--
-                driverExt.wait(Duration.ofMillis(200))
+                driver.wait(Duration.ofMillis(200))
             }
         }
 
