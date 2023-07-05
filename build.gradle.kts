@@ -18,6 +18,7 @@ repositories {
 dependencies {
     implementation("org.seleniumhq.selenium:selenium-chrome-driver:3.141.59")
     implementation("org.seleniumhq.selenium:selenium-java:3.141.59")
+    implementation("org.apache.poi:poi:5.2.2")
     testImplementation(kotlin("test"))
 }
 
