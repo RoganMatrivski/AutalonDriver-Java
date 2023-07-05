@@ -2,6 +2,7 @@ package com.nawadata.nfunittestlibrary.uigetter
 
 import com.nawadata.nfunittestlibrary.Consts
 import com.nawadata.nfunittestlibrary.Tools
+import com.nawadata.nfunittestlibrary.getElement
 import com.nawadata.nfunittestlibrary.uigetter.extui.TableRow
 import com.nawadata.nfunittestlibrary.uigetter.extui.TextboxInput
 import org.openqa.selenium.By
@@ -11,104 +12,79 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
 class ExtUIGetter(
-    private val driver: WebDriver,
-    private val webElement: WebElement?
+    private val driver: WebDriver
 ) {
-    constructor(driver: WebDriver) : this(driver, null)
-
-    fun shouldBe() = ShouldBe(driver, webElement!!) // If there's no webElement, just throw exception
 
     @JvmOverloads
-    fun getInputFromLabel(label: String, inexactLabel: Boolean = false): ExtUIGetter {
+    fun getInputFromLabel(label: String, inexactLabel: Boolean = false, xpathRoot: String = "//"): ShouldBe {
         val elementGetterXPath =
             if (inexactLabel)
                 Tools.xpathInexactContains("text()", label)
             else
                 "text() = '$label'"
 
-        val xpathRoot = if (webElement != null) "descendant::" else "//"
-        val el = webElement ?: driver
-        return ExtUIGetter(
-            driver, el.findElement(
-                By.xpath(
-                    xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']"
-                )
-            )
+        return ShouldBe(driver,
+            driver.getElement()
+                .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']")
+                .untilElementVisible().getWebElement()
         )
     }
 
     @JvmOverloads
-    fun getIFrameFromLabel(label: String, inexactLabel: Boolean = false): ExtUIGetter {
+    fun getIFrameFromLabel(label: String, inexactLabel: Boolean = false, xpathRoot: String = "//"): ShouldBe {
         val elementGetterXPath =
             if (inexactLabel)
                 Tools.xpathInexactContains("text()", label)
             else
                 "text() = '$label'"
 
-        val xpathRoot = if (webElement != null) "descendant::" else "//"
-        val el = webElement ?: driver
-        return ExtUIGetter(
-            driver, el
-                .findElement(
-                    By.xpath(
-                        xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='iframeEl']"
-                    )
-                )
+        return ShouldBe(driver,
+            driver.getElement()
+                .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='iframeEl']")
+                .untilElementVisible().getWebElement()
         )
     }
 
     @JvmOverloads
-    fun getWindowFromTitle(title: String, inexactLabel: Boolean = false): ExtUIGetter {
+    fun getWindowFromTitle(title: String, inexactLabel: Boolean = false, xpathRoot: String = "//"): ShouldBe {
         val elementGetterXPath =
             if (inexactLabel)
                 Tools.xpathInexactContains("text()", title)
             else
                 "text() = '$title'"
 
-        val xpathRoot = if (webElement != null) "descendant::" else "//"
-        val el = webElement ?: driver
-        return ExtUIGetter(
-            driver, el
-                .findElement(
-                    By.xpath(
-                        xpathRoot +
-                                "div[$elementGetterXPath and @data-ref='textEl']/"
-                                + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]"
-                    )
-                )
+        return ShouldBe(driver,
+            driver.getElement()
+                .byXPath(xpathRoot +
+                        "div[$elementGetterXPath and @data-ref='textEl']/"
+                        + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]")
+                .untilElementVisible().getWebElement()
         )
     }
 
     @JvmOverloads
-    fun getGroupFromTitle(title: String, inexactLabel: Boolean = false): ExtUIGetter {
+    fun getGroupFromTitle(title: String, inexactLabel: Boolean = false, xpathRoot: String = "//"): ShouldBe {
         val elementGetterXPath =
             if (inexactLabel)
                 Tools.xpathInexactContains("text()", title)
             else
                 "text() = '$title'"
 
-        val xpathRoot = if (webElement != null) "descendant::" else "//"
-        val el = webElement ?: driver
-        return ExtUIGetter(
-            driver, el
-                .findElement(
-                    By.xpath(
-                        xpathRoot + "div[$elementGetterXPath]//ancestor::div[contains(@class, 'x-panel x-panel-default')]"
-                    )
-                )
+        return ShouldBe(driver,
+            driver.getElement()
+                .byXPath(xpathRoot + "div[$elementGetterXPath]//ancestor::div[contains(@class, 'x-panel x-panel-default')]")
+                .untilElementVisible().getWebElement()
         )
     }
 
     @JvmOverloads
-    fun getFilterColumnInputByName(columnName: String, inexactLabel: Boolean = false): TextboxInput {
+    fun getFilterColumnInputByName(columnName: String, inexactLabel: Boolean = false, xpathRoot: String = "//"): TextboxInput {
         val textElementGetter =
             if (inexactLabel)
                 Tools.xpathInexactContains("text()", columnName)
             else
                 "text() = '$columnName'"
 
-        val xpathRoot = if (webElement != null) "descendant::" else "//"
-        val el = webElement ?: driver
         val xpathQuery = "" +
                 "$xpathRoot*[contains(@class, 'x-grid-header-ct')]" +
                 "//div[contains(@class, 'x-column-header')]" +
@@ -116,14 +92,14 @@ class ExtUIGetter(
                 "/ancestor::div[@role='columnheader']" +
                 "//input"
 
-        val elementSearch = el.findElement(By.xpath(xpathQuery))
+        val elementSearch = driver.findElement(By.xpath(xpathQuery))
         WebDriverWait(driver, Consts.defaultTimeout.seconds)
             .until(ExpectedConditions.elementToBeClickable(elementSearch))
 
         return TextboxInput(driver, elementSearch)
     }
 
-    fun getRowElementByIndex(nonZeroIndex: Int): TableRow {
+    fun getRowElementByIndex(nonZeroIndex: Int, xpathRoot: String = "//"): TableRow {
         if (nonZeroIndex == 0) {
             throw Exception("Index is at zero")
         }
@@ -134,11 +110,9 @@ class ExtUIGetter(
             nonZeroIndex
         }
 
-        val xpathRoot = if (webElement != null) "descendant::" else "//"
-        val el = webElement ?: driver
         val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
 
-        val elementSearch = el.findElement(By.xpath(xpathQuery))
+        val elementSearch = driver.findElement(By.xpath(xpathQuery))
         WebDriverWait(driver, Consts.defaultTimeout.seconds)
             .until(ExpectedConditions.visibilityOf(elementSearch))
 

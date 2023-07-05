@@ -26,7 +26,7 @@ class ShouldBe(
      * @throws IncorrectTypeException the incorrect type exception
      */
     @Throws(IncorrectTypeException::class)
-    fun radio(): RadioInput {
+    fun asRadio(): RadioInput {
         return try {
             val radioInputEl = element.findElement(
                 By.xpath("ancestor::div[contains(@class, 'x-container x-form-checkboxgroup')]")
@@ -44,7 +44,7 @@ class ShouldBe(
      * @throws IncorrectTypeException the incorrect type exception
      */
     @Throws(IncorrectTypeException::class)
-    fun dropdown(): DropdownInput {
+    fun asDropdown(): DropdownInput {
         return try {
             val dropdownInputEl = element.findElement(
                 By.xpath(
@@ -67,7 +67,7 @@ class ShouldBe(
      * @throws IncorrectTypeException the incorrect type exception
      */
     @Throws(IncorrectTypeException::class)
-    fun textbox(): TextboxInput {
+    fun asTextbox(): TextboxInput {
         return try {
             val textboxInputEl = element.findElement(
                 By.xpath("(../input[@role='textbox' and not(@aria-owns)] | ../textarea)")
@@ -85,7 +85,7 @@ class ShouldBe(
      * @throws IncorrectTypeException the incorrect type exception
      */
     @Throws(IncorrectTypeException::class)
-    fun numberTextbox(): NumberTextboxInput {
+    fun asNumberTextbox(): NumberTextboxInput {
         return try {
             val numberTextboxInputEl =
                 element.findElement(By.xpath("../input[@role='spinbutton']"))
@@ -102,7 +102,7 @@ class ShouldBe(
      * @throws IncorrectTypeException the incorrect type exception
      */
     @Throws(IncorrectTypeException::class)
-    fun date(): DateInput {
+    fun asDate(): DateInput {
         return try {
             val dateInputEl = element.findElement(
                 By.xpath(
@@ -124,7 +124,7 @@ class ShouldBe(
      * @throws IncorrectTypeException the incorrect type exception
      */
     @Throws(IncorrectTypeException::class)
-    fun htmlEditor(): HtmlInput {
+    fun asHtmlEditor(): HtmlInput {
         return try {
             val htmlIframe = driver.switchTo().frame(element)
             val htmlInputEl = htmlIframe.findElement(
