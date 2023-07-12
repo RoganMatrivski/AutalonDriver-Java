@@ -16,18 +16,24 @@ class ExtUIGetter(
 ) {
 
     @JvmOverloads
-    fun getInputFromLabel(label: String, inexactLabel: Boolean = false, xpathRoot: String = "//"): ShouldBe {
+    fun getInputFromLabel(label: String, inexactLabel: Boolean = false, xpathRoot: String = "//", instantReturn: Boolean = false): ShouldBe {
         val elementGetterXPath =
             if (inexactLabel)
                 Tools.xpathInexactContains("text()", label)
             else
                 "text() = '$label'"
 
-        return ShouldBe(driver,
+        if (instantReturn) {
+            return ShouldBe(driver,
+                driver.getElement()
+                    .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']")
+                    .now()
+            )
+        } else {return ShouldBe(driver,
             driver.getElement()
                 .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']")
                 .untilElementInteractable().getWebElement()
-        )
+        ) }
     }
 
     @JvmOverloads
