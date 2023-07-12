@@ -26,7 +26,7 @@ class ExtUIGetter(
         return ShouldBe(driver,
             driver.getElement()
                 .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']")
-                .untilElementVisible().getWebElement()
+                .untilElementInteractable().getWebElement()
         )
     }
 
@@ -41,7 +41,7 @@ class ExtUIGetter(
         return ShouldBe(driver,
             driver.getElement()
                 .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='iframeEl']")
-                .untilElementVisible().getWebElement()
+                .untilElementInteractable().getWebElement()
         )
     }
 
@@ -58,7 +58,7 @@ class ExtUIGetter(
                 .byXPath(xpathRoot +
                         "div[$elementGetterXPath and @data-ref='textEl']/"
                         + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]")
-                .untilElementVisible().getWebElement()
+                .untilElementInteractable().getWebElement()
         )
     }
 
@@ -73,7 +73,7 @@ class ExtUIGetter(
         return ShouldBe(driver,
             driver.getElement()
                 .byXPath(xpathRoot + "div[$elementGetterXPath]//ancestor::div[contains(@class, 'x-panel x-panel-default')]")
-                .untilElementVisible().getWebElement()
+                .untilElementInteractable().getWebElement()
         )
     }
 
