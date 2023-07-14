@@ -1,6 +1,7 @@
 package com.nawadata.nfunittestlibrary.finder
 
 import com.nawadata.nfunittestlibrary.Consts
+import com.nawadata.nfunittestlibrary.DefaultConfigs
 import com.nawadata.nfunittestlibrary.WebElementExtended
 
 import org.openqa.selenium.By
@@ -13,11 +14,12 @@ import org.openqa.selenium.support.ui.WebDriverWait
 class Getter (
     private val driver: WebDriver,
     private val by: By,
+    private val configs: DefaultConfigs
 ) {
     fun now(): WebElement = driver.findElement(by)
 
     @JvmOverloads
-    fun untilElementVisible(customTimeout: Long = Consts.defaultTimeout.seconds): WebElementExtended {
+    fun untilElementVisible(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
         return try {
             WebElementExtended(
                 driver, WebDriverWait(driver, customTimeout)
@@ -29,7 +31,7 @@ class Getter (
     }
 
     @JvmOverloads
-    fun untilElementInvisible(customTimeout: Long = Consts.defaultTimeout.seconds): Boolean {
+    fun untilElementInvisible(customTimeout: Long = configs.defaultTimeout.seconds): Boolean {
         return try {
             WebDriverWait(driver, customTimeout)
                 .until(ExpectedConditions.invisibilityOfElementLocated(by))
@@ -39,7 +41,7 @@ class Getter (
     }
 
     @JvmOverloads
-    fun untilElementInteractable(customTimeout: Long = Consts.defaultTimeout.seconds): WebElementExtended {
+    fun untilElementInteractable(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
         return try {
             WebElementExtended(
                 driver, WebDriverWait(driver, customTimeout)

@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary.uigetter
 
+import com.nawadata.nfunittestlibrary.DefaultConfigs
 import com.nawadata.nfunittestlibrary.Tools
 import com.nawadata.nfunittestlibrary.getElement
 import com.nawadata.nfunittestlibrary.uigetter.reactmui.*
@@ -8,9 +9,10 @@ import org.openqa.selenium.WebElement
 
 class ReactMUIGetter(
     private val driver: WebDriver,
+    private val configs: DefaultConfigs,
     private val webElement: WebElement?
 ) {
-    constructor(driver: WebDriver) : this(driver, null)
+    constructor(driver: WebDriver, configs: DefaultConfigs) : this(driver, configs, null)
 
     @JvmOverloads
     fun getTextboxFromLabel(label: String, inexactLabel: Boolean = false): TextboxInput {
@@ -22,7 +24,7 @@ class ReactMUIGetter(
 
         return TextboxInput(
             driver,
-            driver.getElement()
+            driver.getElement(configs)
                 .byXPath(
                     "$xpathGet/" +
                             "ancestor::*[contains(@class, 'MuiFormControl-root')][1]" +
@@ -36,7 +38,7 @@ class ReactMUIGetter(
     fun getDropdownFromLabel(label: String, inexactLabel: Boolean = false): DropdownInput {
         return DropdownInput(
             driver,
-            driver.getElement().byString(label, tag = "label", exactText = !inexactLabel)
+            driver.getElement(configs).byString(label, tag = "label", exactText = !inexactLabel)
                 .untilElementInteractable().highlightAndGetElement()
         )
     }
@@ -45,7 +47,7 @@ class ReactMUIGetter(
     fun getRadioFromLabel(label: String, inexactLabel: Boolean = false): RadioInput {
         return RadioInput(
             driver,
-            driver.getElement().byString(label, tag = "legend", exactText = !inexactLabel)
+            driver.getElement(configs).byString(label, tag = "legend", exactText = !inexactLabel)
                 .untilElementInteractable().highlightAndGetElement()
         )
     }
@@ -54,7 +56,7 @@ class ReactMUIGetter(
     fun getDateFromLabel(label: String, inexactLabel: Boolean = false): DateInput {
         return DateInput(
             driver,
-            driver.getElement().byString(label, tag = "label", exactText = !inexactLabel)
+            driver.getElement(configs).byString(label, tag = "label", exactText = !inexactLabel)
                 .untilElementInteractable().highlightAndGetElement()
         )
     }
@@ -63,7 +65,7 @@ class ReactMUIGetter(
     fun getTimeFromLabel(label: String, inexactLabel: Boolean = false): TimeInput {
         return TimeInput(
             driver,
-            driver.getElement().byString(label, tag = "label", exactText = !inexactLabel)
+            driver.getElement(configs).byString(label, tag = "label", exactText = !inexactLabel)
                 .untilElementInteractable().highlightAndGetElement()
         )
     }
@@ -72,7 +74,7 @@ class ReactMUIGetter(
     fun getHTMLFromLabel(label: String, inexactLabel: Boolean = false): HtmlInput {
         return HtmlInput(
             driver,
-            driver.getElement().byString(label, tag = "p", exactText = !inexactLabel)
+            driver.getElement(configs).byString(label, tag = "p", exactText = !inexactLabel)
                 .untilElementInteractable().highlightAndGetElement()
         )
     }
@@ -81,7 +83,7 @@ class ReactMUIGetter(
     fun getCheckboxFromLabel(label: String, inexactLabel: Boolean = false): CheckboxInput {
         return CheckboxInput(
             driver,
-            driver.getElement().byString(label, tag = "span", exactText = !inexactLabel)
+            driver.getElement(configs).byString(label, tag = "span", exactText = !inexactLabel)
                 .untilElementInteractable().highlightAndGetElement()
         )
     }

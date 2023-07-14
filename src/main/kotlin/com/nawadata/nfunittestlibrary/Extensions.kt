@@ -91,11 +91,11 @@ fun WebDriver.highlightElement(element: WebElement): Any =
 fun WebDriver.getExtendedElement() =
     WebElementExtended(this, null)
 
-fun WebDriver.getElement() =
-    From(this)
+fun WebDriver.getElement(configs: DefaultConfigs = DefaultConfigs()) =
+    From(this, configs)
 
-fun WebDriver.uiGetter() =
-    UIGetter(this)
+fun WebDriver.uiGetter(configs: DefaultConfigs = DefaultConfigs()) =
+    UIGetter(this, configs)
 
 fun WebElement.toExtended(driver: WebDriver) =
     WebElementExtended(driver, this)

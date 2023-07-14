@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary.finder
 
+import com.nawadata.nfunittestlibrary.DefaultConfigs
 import com.nawadata.nfunittestlibrary.Enums
 import com.nawadata.nfunittestlibrary.Tools
 import org.openqa.selenium.WebDriver
@@ -57,6 +58,7 @@ class ByStringBuilder private constructor(
         if (exactText)
             Tools.getElementContainingStringExact(string, by, tag, index)
         else
-            Tools.getElementContainingString(string, by, tag, index)
+            Tools.getElementContainingString(string, by, tag, index),
+        DefaultConfigs()
     )
 }

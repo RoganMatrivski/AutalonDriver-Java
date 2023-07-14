@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary.finder
 
+import com.nawadata.nfunittestlibrary.DefaultConfigs
 import com.nawadata.nfunittestlibrary.Enums
 import com.nawadata.nfunittestlibrary.Tools
 import org.openqa.selenium.By
@@ -7,8 +8,9 @@ import org.openqa.selenium.WebDriver
 
 class From (
     private val driver: WebDriver,
+    private val configs: DefaultConfigs
 ) {
-    fun by(by: By) = Getter(driver, by)
+    fun by(by: By) = Getter(driver, by, configs)
 
     @JvmOverloads
     fun byString(
@@ -22,10 +24,11 @@ class From (
         if (exactText)
             Tools.getElementContainingStringExact(string, by, tag, index)
         else
-            Tools.getElementContainingString(string, by, tag, index)
+            Tools.getElementContainingString(string, by, tag, index),
+        configs
     )
 
     fun byStringQueryBuilder(string: String) = ByStringBuilder.Builder(driver, string)
 
-    fun byXPath(xpath: String) = Getter(driver, By.xpath(xpath))
+    fun byXPath(xpath: String) = Getter(driver, By.xpath(xpath), configs)
 }

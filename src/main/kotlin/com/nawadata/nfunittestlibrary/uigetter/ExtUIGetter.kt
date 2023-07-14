@@ -1,6 +1,7 @@
 package com.nawadata.nfunittestlibrary.uigetter
 
 import com.nawadata.nfunittestlibrary.Consts
+import com.nawadata.nfunittestlibrary.DefaultConfigs
 import com.nawadata.nfunittestlibrary.Tools
 import com.nawadata.nfunittestlibrary.getElement
 import com.nawadata.nfunittestlibrary.uigetter.extui.TableRow
@@ -12,7 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
 class ExtUIGetter(
-    private val driver: WebDriver
+    private val driver: WebDriver,
+    private val configs: DefaultConfigs
 ) {
 
     @JvmOverloads
@@ -23,17 +25,19 @@ class ExtUIGetter(
             else
                 "text() = '$label'"
 
-        if (instantReturn) {
-            return ShouldBe(driver,
-                driver.getElement()
+        return if (instantReturn) {
+            ShouldBe(driver,
+                driver.getElement(configs)
                     .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']")
                     .now()
             )
-        } else {return ShouldBe(driver,
-            driver.getElement()
-                .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']")
-                .untilElementInteractable().getWebElement()
-        ) }
+        } else {
+            ShouldBe(driver,
+                driver.getElement(configs)
+                    .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='inputEl']")
+                    .untilElementInteractable().getWebElement()
+            )
+        }
     }
 
     @JvmOverloads
@@ -45,7 +49,7 @@ class ExtUIGetter(
                 "text() = '$label'"
 
         return ShouldBe(driver,
-            driver.getElement()
+            driver.getElement(configs)
                 .byXPath(xpathRoot + "span[$elementGetterXPath]/ancestor::label/../descendant::*[@data-ref='iframeEl']")
                 .untilElementInteractable().getWebElement()
         )
@@ -60,7 +64,7 @@ class ExtUIGetter(
                 "text() = '$title'"
 
         return ShouldBe(driver,
-            driver.getElement()
+            driver.getElement(configs)
                 .byXPath(xpathRoot +
                         "div[$elementGetterXPath and @data-ref='textEl']/"
                         + "ancestor::*[contains(@class, 'x-window x-layer x-window-default')]")
@@ -77,7 +81,7 @@ class ExtUIGetter(
                 "text() = '$title'"
 
         return ShouldBe(driver,
-            driver.getElement()
+            driver.getElement(configs)
                 .byXPath(xpathRoot + "div[$elementGetterXPath]//ancestor::div[contains(@class, 'x-panel x-panel-default')]")
                 .untilElementInteractable().getWebElement()
         )
@@ -99,7 +103,7 @@ class ExtUIGetter(
                 "//input"
 
         val elementSearch = driver.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, Consts.defaultTimeout.seconds)
+        WebDriverWait(driver, configs.defaultTimeout.seconds)
             .until(ExpectedConditions.elementToBeClickable(elementSearch))
 
         return TextboxInput(driver, elementSearch)
@@ -119,7 +123,7 @@ class ExtUIGetter(
         val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
 
         val elementSearch = driver.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, Consts.defaultTimeout.seconds)
+        WebDriverWait(driver, configs.defaultTimeout.seconds)
             .until(ExpectedConditions.visibilityOf(elementSearch))
 
         return TableRow(driver, elementSearch)
