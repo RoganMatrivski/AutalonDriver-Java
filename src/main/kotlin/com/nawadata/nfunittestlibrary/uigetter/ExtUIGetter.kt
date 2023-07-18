@@ -107,6 +107,7 @@ class ExtUIGetter(
         return TextboxInput(driver, elementSearch)
     }
 
+    @JvmOverloads
     fun getRowElementByIndex(nonZeroIndex: Int, xpathRoot: String = "//"): TableRow {
         if (nonZeroIndex == 0) {
             throw Exception("Index is at zero")
