@@ -102,9 +102,7 @@ class ExtUIGetter(
                 "/ancestor::div[@role='columnheader']" +
                 "//input"
 
-        val elementSearch = driver.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, configs.defaultTimeout.seconds)
-            .until(ExpectedConditions.elementToBeClickable(elementSearch))
+        val elementSearch = driver.getElement().byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
 
         return TextboxInput(driver, elementSearch)
     }
@@ -122,9 +120,7 @@ class ExtUIGetter(
 
         val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
 
-        val elementSearch = driver.findElement(By.xpath(xpathQuery))
-        WebDriverWait(driver, configs.defaultTimeout.seconds)
-            .until(ExpectedConditions.visibilityOf(elementSearch))
+        val elementSearch = driver.getElement().byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
 
         return TableRow(driver, elementSearch)
     }
