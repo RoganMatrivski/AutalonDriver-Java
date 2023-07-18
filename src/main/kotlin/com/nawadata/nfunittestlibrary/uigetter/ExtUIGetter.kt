@@ -124,4 +124,11 @@ class ExtUIGetter(
 
         return TableRow(driver, elementSearch)
     }
+
+    fun getButton(text: String) =
+        driver
+            .getElement()
+            .byXPath("//span[text() = '${text}']/ancestor::a[@role = 'button']")
+            .untilElementInteractable()
+            .highlightAndGetElement()
 }
