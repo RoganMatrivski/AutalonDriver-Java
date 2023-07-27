@@ -1,5 +1,6 @@
 package com.nawadata.nfunittestlibrary.uigetter.extui
 
+import com.nawadata.nfunittestlibrary.getElement
 import org.openqa.selenium.By
 import com.nawadata.nfunittestlibrary.wait
 import org.openqa.selenium.WebDriver
@@ -31,28 +32,32 @@ class DateInput(
             formatter.format(randomDate)
             val componentid = dateField.getAttribute("data-componentid")
 
-            // Fix popups (probably)
-            // Click trigger, click to the side, and then click the trigger again.
-            // Dumb AF, but it works, so why not.
-            driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
-                .click()
-            Actions(driver).moveByOffset(200, 0).click().perform()
-            driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
-                .click()
+//            // Fix popups (probably)
+//            // Click trigger, click to the side, and then click the trigger again.
+//            // Dumb AF, but it works, so why not.
+//            driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
+//                .click()
+//            Actions(driver).moveByOffset(200, 0).click().perform()
 
+            val elGetter = driver.getElement()
+
+            elGetter.byXPath("//*[@id='$componentid-trigger-picker']").clickAwait()
+
+            val datePickerXpath = "//*[@id='$componentid-picker']"
             val datePickerComponent =
-                driver.findElement(By.id(String.format("%s-picker", componentid)))
-            datePickerComponent.findElement(
-                By.xpath("descendant::*[@data-ref='middleBtnEl']/descendant::*[@data-ref='btnInnerEl']")
-            ).click()
-            val monthPickerComponent =
-                datePickerComponent.findElement(By.xpath("*[contains(@id, 'monthpicker')]"))
+                elGetter.byXPath(datePickerXpath).untilElementVisible().getWebElement()
+            elGetter.byXPath("$datePickerXpath/descendant::*[@data-ref='middleBtnEl']/descendant::*[@data-ref='btnInnerEl']")
+                .clickAwait()
+            val monthPickerXpath = "$datePickerXpath/*[contains(@id, 'monthpicker')]"
+            val yearPickerXpath = "$monthPickerXpath/descendant::*[@data-ref='yearEl']"
             val yearPickerComponent =
-                monthPickerComponent.findElement(By.xpath("descendant::*[@data-ref='yearEl']"))
+                elGetter.byXPath(yearPickerXpath).untilElementVisible().getWebElement()
             val yearPickerNavPrevComponent =
-                yearPickerComponent.findElement(By.xpath("descendant::*[@data-ref='prevEl']"))
+                elGetter.byXPath("${yearPickerXpath}/descendant::*[@data-ref='prevEl']").untilElementVisible()
+                    .getWebElement()
             val yearPickerNavNextComponent =
-                yearPickerComponent.findElement(By.xpath("descendant::*[@data-ref='nextEl']"))
+                elGetter.byXPath("${yearPickerXpath}/descendant::*[@data-ref='nextEl']").untilElementVisible()
+                    .getWebElement()
 
             // Wait for the elements to be interactable
             driver.wait(Duration.ofMillis(400))
