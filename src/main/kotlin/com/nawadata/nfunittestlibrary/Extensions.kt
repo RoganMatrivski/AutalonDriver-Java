@@ -91,9 +91,11 @@ fun WebDriver.highlightElement(element: WebElement): Any =
 fun WebDriver.getExtendedElement() =
     WebElementExtended(this, null)
 
+@JvmOverloads
 fun WebDriver.getElement(configs: DefaultConfigs = DefaultConfigs()) =
     From(this, configs)
 
+@JvmOverloads
 fun WebDriver.uiGetter(configs: DefaultConfigs = DefaultConfigs()) =
     UIGetter(this, configs)
 
