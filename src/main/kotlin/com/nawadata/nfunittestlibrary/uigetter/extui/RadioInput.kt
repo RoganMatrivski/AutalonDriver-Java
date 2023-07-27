@@ -11,10 +11,9 @@ class RadioInput(
     private val element: WebElement,
 ) : BasicInputClass(
     driver,
-    element,
-    element.getAttribute("data-componentid")
+    element
 ) {
-    private val componentid = element.getAttribute("data-componentid")
+//    private val componentid = element.findElement(By.xpath("descendant::input[@data-componentid]")).getAttribute("data-componentid")
 
     private val options: List<WebElement>
         get() = element.findElements(By.xpath("descendant::td"))
@@ -43,13 +42,11 @@ class RadioInput(
 
     fun selectElementFromText(text: String): RadioInput {
         println(
-            "//div[@id='" + componentid + "-containerEl']/descendant::label[contains(text(), '"
-                    + text + "')]/../span/input"
+                "descendant::label[contains(text(), '$text')]/../span/input"
         )
         val options = element.findElements(
             By.xpath(
-                "//div[@id='" + componentid
-                        + "-containerEl']/descendant::label[contains(text(), '" + text + "')]/../span/input"
+                    "descendant::label[contains(text(), '$text')]/../span/input"
             )
         )
         require(options.isNotEmpty()) { "Element search returns empty." }
