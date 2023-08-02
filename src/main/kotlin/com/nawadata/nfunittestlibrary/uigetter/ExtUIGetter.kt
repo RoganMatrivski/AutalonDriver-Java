@@ -1,9 +1,6 @@
 package com.nawadata.nfunittestlibrary.uigetter
 
-import com.nawadata.nfunittestlibrary.Consts
-import com.nawadata.nfunittestlibrary.DefaultConfigs
-import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.getElement
+import com.nawadata.nfunittestlibrary.*
 import com.nawadata.nfunittestlibrary.uigetter.extui.TableRow
 import com.nawadata.nfunittestlibrary.uigetter.extui.TextboxInput
 import org.openqa.selenium.By
@@ -103,6 +100,7 @@ class ExtUIGetter(
                 "//input"
 
         val elementSearch = driver.getElement().byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
+        driver.scrollToElement(elementSearch)
 
         return TextboxInput(driver, elementSearch)
     }
@@ -122,6 +120,7 @@ class ExtUIGetter(
         val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
 
         val elementSearch = driver.getElement().byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
+        driver.scrollToElement(elementSearch)
 
         return TableRow(driver, elementSearch)
     }
