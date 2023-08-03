@@ -99,8 +99,10 @@ class ExtUIGetter(
                 "/ancestor::div[@role='columnheader']" +
                 "//input"
 
+        val columnLabel = driver.getElement().byXPath("//*[text() = '$columnName']").untilElementExist().getWebElement()
+        driver.scrollToElement(columnLabel)
+
         val elementSearch = driver.getElement().byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
-        driver.scrollToElement(elementSearch)
 
         return TextboxInput(driver, elementSearch)
     }

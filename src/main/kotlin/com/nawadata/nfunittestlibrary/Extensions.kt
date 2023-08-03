@@ -70,8 +70,10 @@ fun WebDriver.waitUntilFrameLoads(by: By, customTimeout: Long = 60): WebDriver =
     WebDriverWait(this, customTimeout)
         .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by))
 
-fun WebDriver.scrollToElement(element: WebElement) =
+fun WebDriver.scrollToElement(element: WebElement) {
     Actions(this).moveToElement(element).perform()
+    this.getJsExecutor().executeScript("arguments[0].scrollIntoView(true);", element)
+}
 fun WebDriver.isElementStale(element: WebElement): Boolean {
     return try {
         element.isEnabled

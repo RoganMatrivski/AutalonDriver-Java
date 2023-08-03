@@ -52,6 +52,18 @@ class Getter (
         }
     }
 
+    @JvmOverloads
+    fun untilElementExist(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
+        return try {
+            WebElementExtended(
+                driver, WebDriverWait(driver, customTimeout)
+                    .until(ExpectedConditions.presenceOfElementLocated(by))
+            )
+        } catch (ex: TimeoutException) {
+            throw ex
+        }
+    }
+
     fun clickAwait() = this.untilElementInteractable().click()
     fun sendKeysAwait(str: String) = this.untilElementInteractable().sendKeys(str)
 }
