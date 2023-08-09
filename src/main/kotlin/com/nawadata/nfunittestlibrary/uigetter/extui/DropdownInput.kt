@@ -1,12 +1,14 @@
 package com.nawadata.nfunittestlibrary.uigetter.extui
 
 import com.nawadata.nfunittestlibrary.Tools
+import com.nawadata.nfunittestlibrary.getElement
 import com.nawadata.nfunittestlibrary.scrollToElement
 import com.nawadata.nfunittestlibrary.waitUntilVisible
 import org.openqa.selenium.By
 import org.openqa.selenium.StaleElementReferenceException
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.interactions.Actions
 
 class DropdownInput (
     private val driver: WebDriver,
@@ -82,7 +84,8 @@ class DropdownInput (
 
     // TODO: Add Exact variant 
     fun selectElementFromText(text: String): DropdownInput {
-        driver.findElement(By.id("$componentId-trigger-picker")).click()
+        val pickerElExt = driver.getElement().byXPath("//*[@id = '$componentId-trigger-picker']").untilElementExist()
+        pickerElExt.scrollToElement().highlightAndGetElement().click()
 
         var tries = 5
 
