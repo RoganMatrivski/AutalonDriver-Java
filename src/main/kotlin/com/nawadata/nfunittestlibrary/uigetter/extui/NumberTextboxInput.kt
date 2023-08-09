@@ -14,19 +14,28 @@ class NumberTextboxInput(
     element,
     element.getAttribute("data-componentid")
 ) {
-    fun <T> sendText(textObj: T): NumberTextboxInput =
-        sendText(textObj.toString())
+    @JvmOverloads
+    fun <T> sendText(textObj: T, ignoreErrors: Boolean = false): NumberTextboxInput =
+        sendText(textObj.toString(), ignoreErrors)
 
-    fun sendText(text: String): NumberTextboxInput {
+    fun clearText(): NumberTextboxInput {
         val element = element
-        val intText: Int = try {
-            text.toInt()
+        element.clear()
+        return this
+    }
+
+    @JvmOverloads
+    fun sendText(text: String, ignoreErrors: Boolean = false): NumberTextboxInput {
+        val element = element
+        val numText: Double = try {
+            text.toDouble()
         } catch (e: NumberFormatException) {
             throw IllegalArgumentException(
                 "Can't read text argument as number. Please recheck your input",
                 e
             )
         }
+        val intText: Int = numText.toInt()
         try {
             val valueMin = element.getAttribute("aria-valuemin").toInt()
             require(intText >= valueMin) {
