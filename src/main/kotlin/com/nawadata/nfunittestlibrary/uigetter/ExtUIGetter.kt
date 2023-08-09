@@ -99,10 +99,10 @@ class ExtUIGetter(
                 "/ancestor::div[@role='columnheader']" +
                 "//input"
 
-        val columnLabel = driver.getElement().byXPath("//*[text() = '$columnName']").untilElementExist().getWebElement()
+        val columnLabel = driver.getElement(configs).byXPath("//*[text() = '$columnName']").untilElementExist().getWebElement()
         driver.scrollToElement(columnLabel)
 
-        val elementSearch = driver.getElement().byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
+        val elementSearch = driver.getElement(configs).byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
 
         return TextboxInput(driver, elementSearch)
     }
@@ -121,7 +121,7 @@ class ExtUIGetter(
 
         val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
 
-        val elementSearch = driver.getElement().byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
+        val elementSearch = driver.getElement(configs).byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
         driver.scrollToElement(elementSearch)
 
         return TableRow(driver, elementSearch)
@@ -129,7 +129,7 @@ class ExtUIGetter(
 
     fun getButton(text: String) =
         driver
-            .getElement()
+            .getElement(configs)
             .byXPath("//span[text() = '${text}']/ancestor::a[@role = 'button']")
             .untilElementInteractable()
             .highlightAndGetElement()
