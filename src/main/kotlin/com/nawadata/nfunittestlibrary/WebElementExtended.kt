@@ -10,6 +10,11 @@ class WebElementExtended(
 ) {
     fun getWebElement() = webElement!!
 
+    fun scrollToElement(): WebElementExtended {
+        driver.scrollToElement(webElement!!)
+        return this
+    }
+
     fun highlightAndGetElement(): WebElement {
         driver.getJsExecutor().executeScript("arguments[0].style.outline='4px solid red'", webElement!!)
         return webElement
