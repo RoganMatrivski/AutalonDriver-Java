@@ -1,9 +1,6 @@
 package com.nawadata.nfunittestlibrary.uigetter.extui
 
-import com.nawadata.nfunittestlibrary.Tools
-import com.nawadata.nfunittestlibrary.getElement
-import com.nawadata.nfunittestlibrary.scrollToElement
-import com.nawadata.nfunittestlibrary.waitUntilVisible
+import com.nawadata.nfunittestlibrary.*
 import org.openqa.selenium.By
 import org.openqa.selenium.StaleElementReferenceException
 import org.openqa.selenium.WebDriver
@@ -82,30 +79,42 @@ class DropdownInput (
         return this
     }
 
-    // TODO: Add Exact variant 
-    fun selectElementFromText(text: String): DropdownInput {
-        val pickerElExt = driver.getElement().byXPath("//*[@id = '$componentId-trigger-picker']").untilElementExist()
-        pickerElExt.scrollToElement().highlightAndGetElement().click()
+    // TODO: Add Exact variant
+    @JvmOverloads
+    fun selectElementFromText(text: String, fillTextboxFirst: Boolean = true): DropdownInput {
+        @Suppress("NAME_SHADOWING") val text = text.trim()
+
+        driver.scrollToElementJS(element, ScrollAlignment.Start)
+
+        if (fillTextboxFirst) {
+            element.click()
+            element.sendKeys(text)
+        } else {
+            val pickerElExt = driver.getElement().byXPath("//*[@id = '$componentId-trigger-picker']").untilElementExist().click()
+        }
 
         var tries = 5
 
         while (tries-- > 0) {
             try {
+                println("Finding $componentId-picker-listEl")
                 driver.waitUntilVisible(By.id("$componentId-picker-listEl"))
-                val options = element.findElements(
-                    By.xpath(
-                        "//ul[@id = '$componentId-picker-listEl']/li[contains(text(), '$text')]"
-                    )
-                )
-                require(options.isNotEmpty()) { "Element search returns empty." }
-                val selected = options[0]
+
+                val optionXPath = if (fillTextboxFirst) {
+                    "//ul[@id = '$componentId-picker-listEl']/li[contains(text(), '$text')]"
+                } else {
+                    "//ul[@id = '$componentId-picker-listEl']/li[text() = '$text']"
+                }
+
+                println("Searching $optionXPath")
+                val selected = driver.getElement().byXPath(optionXPath).untilElementExist().highlightAndGetElement()
 
                 println(selected.getAttribute("id"))
                 driver.scrollToElement(selected)
                 selected.click()
 
                 break
-            } catch (_: StaleElementReferenceException) {
+            } catch (_: Exception) {
             }
         }
         return this

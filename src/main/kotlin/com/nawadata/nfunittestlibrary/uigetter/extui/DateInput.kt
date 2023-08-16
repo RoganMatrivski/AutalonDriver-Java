@@ -1,9 +1,7 @@
 package com.nawadata.nfunittestlibrary.uigetter.extui
 
-import com.nawadata.nfunittestlibrary.getElement
-import com.nawadata.nfunittestlibrary.getJsExecutor
+import com.nawadata.nfunittestlibrary.*
 import org.openqa.selenium.By
-import com.nawadata.nfunittestlibrary.wait
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
@@ -33,6 +31,8 @@ class DateInput(
             formatter.format(randomDate)
             val componentid = dateField.getAttribute("data-componentid")
 
+            driver.scrollToElementJS(dateField, ScrollAlignment.Start)
+
             // Fix popups (probably)
             // Click trigger, click to the side, and then click the trigger again.
             // Dumb AF, but it works, so why not.
@@ -40,11 +40,11 @@ class DateInput(
             driver.findElement(By.id(String.format("%s-trigger-picker", componentid)))
                 .click()
             driver.wait(Duration.ofMillis(500))
-            Actions(driver).moveByOffset(200, 0).click().perform()
+            // Actions(driver).moveByOffset(200, 0).click().perform()
+            driver.getElement().byXPath("//*[@id='$componentid']/descendant::label").clickAwait()
             driver.wait(Duration.ofMillis(500))
 
             val elGetter = driver.getElement()
-            driver.getJsExecutor().executeScript("arguments[0].scrollIntoView(true)", driver.findElement(By.id(String.format("%s-trigger-picker", componentid))))
 
             elGetter.byXPath("//*[@id='$componentid-trigger-picker']").clickAwait()
 

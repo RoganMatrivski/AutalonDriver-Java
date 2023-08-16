@@ -10,6 +10,13 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.util.function.Function
 
+enum class ScrollAlignment(s: String) {
+    Start("start"),
+    Center("center"),
+    End("end"),
+    Nearest("nearest"),
+}
+
 fun WebDriver.getJsExecutor(): JavascriptExecutor {
     return if (this is JavascriptExecutor) {
         this
@@ -70,10 +77,16 @@ fun WebDriver.waitUntilFrameLoads(by: By, customTimeout: Long = 60): WebDriver =
     WebDriverWait(this, customTimeout)
         .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by))
 
-fun WebDriver.scrollToElement(element: WebElement) {
+fun WebDriver.scrollToElement(element: WebElement) =
     Actions(this).moveToElement(element).perform()
-//    this.getJsExecutor().executeScript("arguments[0].scrollIntoView(true);", element)
+
+@JvmOverloads
+fun WebDriver.scrollToElementJS(element: WebElement, verticalAlignment: ScrollAlignment = ScrollAlignment.Nearest, horizontalAlignment: ScrollAlignment = ScrollAlignment.Nearest) {
+    println("arguments[0].scrollIntoView({ behavior: 'smooth', block: '${verticalAlignment.toString().lowercase()}', inline: '${horizontalAlignment.toString().lowercase()}' });")
+
+    this.getJsExecutor().executeScript("arguments[0].scrollIntoView({ behavior: 'auto', block: '${verticalAlignment.toString().lowercase()}', inline: '${horizontalAlignment.toString().lowercase()}' });", element)
 }
+
 fun WebDriver.isElementStale(element: WebElement): Boolean {
     return try {
         element.isEnabled
