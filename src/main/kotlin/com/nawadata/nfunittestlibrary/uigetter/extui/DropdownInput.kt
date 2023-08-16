@@ -16,7 +16,7 @@ class DropdownInput (
     element,
     element.getAttribute("data-componentid")
 ) {
-    private val options: List<WebElement>
+    val options: List<WebElement>
         get() = driver.findElements(By.xpath("//ul[@id = '$componentId-picker-listEl']/li"))
 
     private fun pickOption(index: Int): WebElement {
