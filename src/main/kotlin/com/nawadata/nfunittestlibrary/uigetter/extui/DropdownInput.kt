@@ -87,10 +87,23 @@ class DropdownInput (
         driver.scrollToElementJS(element, ScrollAlignment.Start)
 
         if (fillTextboxFirst) {
-            element.click()
-            element.sendKeys(text)
-        } else {
-            val pickerElExt = driver.getElement().byXPath("//*[@id = '$componentId-trigger-picker']").untilElementExist().click()
+            val textboxEl =
+                driver.getElement().byXPath("//input[@data-componentid='$componentId']").untilElementVisible()
+                    .highlightAndGetElement()
+            println(textboxEl.getSelector())
+            textboxEl.click()
+            textboxEl.sendKeys(text)
+        }
+
+        val pickerCheck = {
+            !driver.findElements(By.id("$componentId-picker-listEl")).isEmpty() ||
+            driver.findElement(By.id("$componentId-picker-listEl")).isDisplayed
+        }
+
+        var pickerTries = 5
+
+        while (pickerTries-- > 0 && !pickerCheck()) {
+            driver.getElement().byXPath("//*[@id = '$componentId-trigger-picker']").clickAwait()
         }
 
         var tries = 5
