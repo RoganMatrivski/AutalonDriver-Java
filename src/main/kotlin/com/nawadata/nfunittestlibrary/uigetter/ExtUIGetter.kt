@@ -100,7 +100,7 @@ class ExtUIGetter(
                 "//input"
 
         val columnLabel = driver.getElement(configs).byXPath("//*[text() = '$columnName']").untilElementExist().getWebElement()
-        driver.scrollToElement(columnLabel)
+        driver.scrollToElementJS(columnLabel, horizontalAlignment = ScrollAlignment.Center)
 
         val elementSearch = driver.getElement(configs).byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
 
