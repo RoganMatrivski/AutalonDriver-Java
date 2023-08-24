@@ -40,15 +40,14 @@ class RadioInput(
         return this
     }
 
-    fun selectElementFromText(text: String): RadioInput {
-        println(
-                "descendant::label[contains(text(), '$text')]/../span/input"
-        )
-        val options = element.findElements(
-            By.xpath(
-                    "descendant::label[contains(text(), '$text')]/../span/input"
-            )
-        )
+    @JvmOverloads
+    fun selectElementFromText(text: String, exact : Boolean = false): RadioInput {
+        val inputXPath = "descendant::label[${
+            if (exact) {"text() = '$text'"} else {"contains(text(), '$text')"}
+        }]/../span/input"
+
+        println(inputXPath)
+        val options = element.findElements(By.xpath(inputXPath))
         require(options.isNotEmpty()) { "Element search returns empty." }
         val selected = options[0]
         driver.scrollToElement(selected)
