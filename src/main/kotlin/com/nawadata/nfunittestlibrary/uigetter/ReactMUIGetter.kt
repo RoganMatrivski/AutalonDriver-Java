@@ -3,6 +3,7 @@ package com.nawadata.nfunittestlibrary.uigetter
 import com.nawadata.nfunittestlibrary.DefaultConfigs
 import com.nawadata.nfunittestlibrary.Tools
 import com.nawadata.nfunittestlibrary.getElement
+import com.nawadata.nfunittestlibrary.scrollToElement
 import com.nawadata.nfunittestlibrary.uigetter.reactmui.*
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -86,5 +87,25 @@ class ReactMUIGetter(
             driver.getElement(configs).byString(label, tag = "span", exactText = !inexactLabel)
                 .untilElementInteractable().highlightAndGetElement()
         )
+    }
+
+    @JvmOverloads
+    fun getRowElementByIndex(nonZeroIndex: Int, xpathRoot: String = "//"): TableRow {
+        if (nonZeroIndex == 0) {
+            throw Exception("Index is at zero")
+        }
+
+        val xpathIndex = if (nonZeroIndex < 0) {
+            "last() + 1 $nonZeroIndex"
+        } else {
+            nonZeroIndex
+        }
+
+        val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
+
+        val elementSearch = driver.getElement(configs).byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
+        driver.scrollToElement(elementSearch)
+
+        return TableRow(driver, elementSearch)
     }
 }
