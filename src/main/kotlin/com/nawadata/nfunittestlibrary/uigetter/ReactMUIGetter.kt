@@ -90,7 +90,7 @@ class ReactMUIGetter(
     }
 
     @JvmOverloads
-    fun getRowElementByIndex(nonZeroIndex: Int, xpathRoot: String = "//"): TableRow {
+    fun getRowElementByIndex(nonZeroIndex: Int): TableRow {
         if (nonZeroIndex == 0) {
             throw Exception("Index is at zero")
         }
@@ -101,7 +101,7 @@ class ReactMUIGetter(
             nonZeroIndex
         }
 
-        val xpathQuery = "$xpathRoot*[contains(@class, 'x-grid-view')]//table[$xpathIndex]"
+        val xpathQuery = "//div[contains(@class, 'nawatable-main-table')]/table/tbody/tr[$xpathIndex]"
 
         val elementSearch = driver.getElement(configs).byXPath(xpathQuery).untilElementInteractable().highlightAndGetElement()
         driver.scrollToElement(elementSearch)
