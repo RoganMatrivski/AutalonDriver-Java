@@ -8,6 +8,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.ExpectedCondition
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
@@ -58,6 +59,30 @@ class Getter (
             WebElementExtended(
                 driver, WebDriverWait(driver, customTimeout)
                     .until(ExpectedConditions.presenceOfElementLocated(by))
+            )
+        } catch (ex: TimeoutException) {
+            throw ex
+        }
+    }
+
+    @JvmOverloads
+    fun untilElementClickable(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
+        return try {
+            WebElementExtended(
+                driver, WebDriverWait(driver, customTimeout)
+                    .until(ExpectedConditions.elementToBeClickable(by))
+            )
+        } catch (ex: TimeoutException) {
+            throw ex
+        }
+    }
+
+    @JvmOverloads
+    fun untilCustomExpectedCondition(ec: ExpectedCondition<WebElement>, customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
+        return try {
+            WebElementExtended(
+                driver, WebDriverWait(driver, customTimeout)
+                    .until(ec)
             )
         } catch (ex: TimeoutException) {
             throw ex
