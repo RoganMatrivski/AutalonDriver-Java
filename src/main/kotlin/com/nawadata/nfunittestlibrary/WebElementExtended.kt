@@ -54,4 +54,8 @@ class WebElementExtended(
 
         if (retryCount == 0) throw lastException
     }
+
+    fun clickJS() {
+        driver.getJsExecutor().executeScript("arguments[0].click()", webElement)
+    }
 }
