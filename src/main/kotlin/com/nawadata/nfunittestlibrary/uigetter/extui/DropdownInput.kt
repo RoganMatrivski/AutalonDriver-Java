@@ -95,9 +95,11 @@ class DropdownInput (
             textboxEl.sendKeys(text)
         }
 
-        val pickerCheck = {
-            !driver.findElements(By.id("$componentId-picker-listEl")).isEmpty() ||
-            driver.findElement(By.id("$componentId-picker-listEl")).isDisplayed
+        val pickerCheck = pickerCheckLambda@{
+            val pickerEl = driver.findElements(By.id("$componentId-picker-listEl"))
+            if (pickerEl.isEmpty()) { return@pickerCheckLambda false }
+
+            return@pickerCheckLambda pickerEl.first().isDisplayed
         }
 
         var pickerTries = 5
