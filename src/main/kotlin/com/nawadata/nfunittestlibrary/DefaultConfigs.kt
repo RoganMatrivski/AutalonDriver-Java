@@ -11,7 +11,6 @@ class DefaultConfigs (
     }
 
     fun setDefaultTimeoutOfSeconds(seconds: Long): DefaultConfigs {
-        defaultTimeout = Duration.ofSeconds(seconds)
-        return this
+        return this.setDefaultTimeout(Duration.ofSeconds(seconds))
     }
 }
