@@ -3,14 +3,11 @@ package com.nawadata.nfunittestlibrary
 import java.time.Duration
 
 class DefaultConfigs (
-    var defaultTimeout: Duration = Consts.defaultTimeout
+    var defaultTimeout: Duration = Consts.defaultTimeout,
+    var defaultPolling: Duration = Consts.defaultPolling,
 ) {
-    fun setDefaultTimeout(duration: Duration): DefaultConfigs {
-        defaultTimeout = duration
-        return this
-    }
-
     fun setDefaultTimeoutOfSeconds(seconds: Long): DefaultConfigs {
-        return this.setDefaultTimeout(Duration.ofSeconds(seconds))
+        this.defaultTimeout = Duration.ofSeconds(seconds)
+        return this
     }
 }

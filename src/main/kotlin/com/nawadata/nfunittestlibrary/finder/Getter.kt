@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedCondition
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
+import java.time.Duration
 
 class Getter (
     private val driver: WebDriver,
@@ -23,7 +24,7 @@ class Getter (
     fun untilElementVisible(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, WebDriverWait(driver, customTimeout)
+                driver, WebDriverWait(driver, customTimeout).pollingEvery(configs.defaultPolling)
                     .until(ExpectedConditions.visibilityOfElementLocated(by))
             )
         } catch (ex: TimeoutException) {
@@ -34,7 +35,7 @@ class Getter (
     @JvmOverloads
     fun untilElementInvisible(customTimeout: Long = configs.defaultTimeout.seconds): Boolean {
         return try {
-            WebDriverWait(driver, customTimeout)
+            WebDriverWait(driver, customTimeout).pollingEvery(configs.defaultPolling)
                 .until(ExpectedConditions.invisibilityOfElementLocated(by))
         } catch (ex: TimeoutException) {
             throw ex
@@ -45,7 +46,7 @@ class Getter (
     fun untilElementInteractable(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, WebDriverWait(driver, customTimeout)
+                driver, WebDriverWait(driver, customTimeout).pollingEvery(configs.defaultPolling)
                     .until(ExpectedConditions.elementToBeClickable(by))
             )
         } catch (ex: TimeoutException) {
@@ -57,7 +58,7 @@ class Getter (
     fun untilElementExist(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, WebDriverWait(driver, customTimeout)
+                driver, WebDriverWait(driver, customTimeout).pollingEvery(configs.defaultPolling)
                     .until(ExpectedConditions.presenceOfElementLocated(by))
             )
         } catch (ex: TimeoutException) {
@@ -69,7 +70,7 @@ class Getter (
     fun untilElementClickable(customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, WebDriverWait(driver, customTimeout)
+                driver, WebDriverWait(driver, customTimeout).pollingEvery(configs.defaultPolling)
                     .until(ExpectedConditions.elementToBeClickable(by))
             )
         } catch (ex: TimeoutException) {
@@ -81,7 +82,7 @@ class Getter (
     fun untilCustomExpectedCondition(ec: ExpectedCondition<WebElement>, customTimeout: Long = configs.defaultTimeout.seconds): WebElementExtended {
         return try {
             WebElementExtended(
-                driver, WebDriverWait(driver, customTimeout)
+                driver, WebDriverWait(driver, customTimeout).pollingEvery(configs.defaultPolling)
                     .until(ec)
             )
         } catch (ex: TimeoutException) {
