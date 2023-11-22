@@ -4,6 +4,7 @@ import com.nawadata.nfunittestlibrary.*
 import com.nawadata.nfunittestlibrary.uigetter.extui.TableRow
 import com.nawadata.nfunittestlibrary.uigetter.extui.TextboxInput
 import org.openqa.selenium.By
+import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedConditions
@@ -133,4 +134,15 @@ class ExtUIGetter(
             .byXPath("//span[text() = '${text}']/ancestor::a[@role = 'button']")
             .untilElementInteractable()
             .highlightAndGetElement()
+
+    @JvmOverloads
+    fun getSpinnerAndWait(defaultTimeout: Long = 5, rootXPath: String = "//") {
+        val defaultConfigs = DefaultConfigs().setDefaultTimeoutOfSeconds(defaultTimeout) // Overriding this to avoid long time
+        val elGetter = driver.getElement(defaultConfigs)
+        try {
+            elGetter.byXPath("$rootXPath*[@class = 'x-mask-msg x-mask-loading']").untilElementVisible(defaultTimeout)
+            elGetter.byXPath("$rootXPath*[@class = 'x-mask-msg x-mask-loading']").untilElementInvisible(defaultTimeout)
+        } catch (_: TimeoutException) { }
+
+    }
 }
