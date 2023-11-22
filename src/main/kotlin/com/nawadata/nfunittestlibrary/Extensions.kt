@@ -100,7 +100,7 @@ fun WebDriver.setWindowDimension(width: Int, height: Int) {
     this.manage().window().size = Dimension(width, height)
 }
 
-fun WebDriver.highlightElement(element: WebElement): Any =
+fun WebDriver.highlightElement(element: WebElement): Any? =
     this.getJsExecutor().executeScript("arguments[0].style.border='3px solid red'", element)
 
 fun WebDriver.getExtendedElement() =
