@@ -33,9 +33,7 @@ class PopupMultiComboBox (
         return this
     }
 
-    // TODO: Add Exact variant
     fun selectElementFromColumns(multiColumns: Array<Array<String>>): PopupMultiComboBox {
-        // TODO
         val (uiGetter, elGetter) = Pair(driver.uiGetter().extUI(), driver.getElement())
 
         try {
