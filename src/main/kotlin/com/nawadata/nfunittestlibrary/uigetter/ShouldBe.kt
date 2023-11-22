@@ -1,12 +1,8 @@
 package com.nawadata.nfunittestlibrary.uigetter
 
 import com.nawadata.nfunittestlibrary.exceptions.IncorrectTypeException
-import com.nawadata.nfunittestlibrary.uigetter.extui.DateInput
-import com.nawadata.nfunittestlibrary.uigetter.extui.DropdownInput
-import com.nawadata.nfunittestlibrary.uigetter.extui.HtmlInput
-import com.nawadata.nfunittestlibrary.uigetter.extui.NumberTextboxInput
-import com.nawadata.nfunittestlibrary.uigetter.extui.RadioInput
-import com.nawadata.nfunittestlibrary.uigetter.extui.TextboxInput
+import com.nawadata.nfunittestlibrary.getSelector
+import com.nawadata.nfunittestlibrary.uigetter.extui.*
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.WebDriver
@@ -135,6 +131,44 @@ class ShouldBe(
             HtmlInput(htmlIframe, htmlInputEl)
         } catch (e: NoSuchElementException) {
             throw IncorrectTypeException("Input element is not a date", e)
+        }
+    }
+
+    /**
+     * Cast input into popup combobox input class.
+     *
+     * @return the popup combobox input class
+     * @throws IncorrectTypeException the incorrect type exception
+     */
+    @Throws(IncorrectTypeException::class)
+    fun asPopupComboBox(): PopupComboBox {
+        return try {
+            if (element.getAttribute("data-componentid").isEmpty()) {
+                throw NoSuchElementException("Cannot find popup combobox component ID")
+            }
+
+            PopupComboBox(driver, element)
+        } catch (e: NoSuchElementException) {
+            throw IncorrectTypeException("Input element is not a popup combobox", e)
+        }
+    }
+
+    /**
+     * Cast input into popup combobox input class.
+     *
+     * @return the popup combobox input class
+     * @throws IncorrectTypeException the incorrect type exception
+     */
+    @Throws(IncorrectTypeException::class)
+    fun asPopupMultiComboBox(): PopupMultiComboBox {
+        return try {
+            if (element.getAttribute("data-componentid").isEmpty()) {
+                throw NoSuchElementException("Cannot find popup combobox component ID")
+            }
+
+            PopupMultiComboBox(driver, element)
+        } catch (e: NoSuchElementException) {
+            throw IncorrectTypeException("Input element is not a popup combobox", e)
         }
     }
 }

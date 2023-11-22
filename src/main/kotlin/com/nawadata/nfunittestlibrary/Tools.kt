@@ -155,4 +155,10 @@ object Tools {
     @Deprecated("Function was ambiguous with both name and function", replaceWith = ReplaceWith("getElementContainingString()"), level = DeprecationLevel.ERROR)
     @JvmStatic fun getElementByText(text: String, tag: String = "*"): By =
         By.xpath("//$tag[contains(text(), '$text')]");
+
+
+    // Final xpath for a single column should look like
+    // ${rootXPath}/descendant::table[tbody/tr[td/div[text()='Value String']]]
+    @JvmOverloads @JvmStatic fun getPopupRowXpath(values: Array<String>, rootXPath: String = "//*") =
+        "$rootXPath/descendant::table[tbody/tr[${values.joinToString(" and ") { "td/div[text() = '$it']" }}]]"
 }
