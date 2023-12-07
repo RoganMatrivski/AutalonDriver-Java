@@ -33,6 +33,9 @@ class PopupComboBox (
         return this
     }
 
+    fun selectElementFromColumns(column: String): PopupComboBox =
+        this.selectElementFromColumns(arrayOf(column))
+
     fun selectElementFromColumns(columns: Array<String>): PopupComboBox {
         val (uiGetter, elGetter) = Pair(driver.uiGetter().extUI(), driver.getElement())
 
@@ -47,10 +50,6 @@ class PopupComboBox (
         elGetter.byXPath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input").untilElementInteractable()
 
         val filtersEl = driver.findElements(By.xpath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input"))
-
-        if (filtersEl.size != columns.size) {
-            throw IllegalArgumentException("Input filter count doesn't match the page filter count")
-        }
 
         for ((str, input) in columns.zip(filtersEl)) {
             if (input.getAttribute("value").isNotEmpty()) {

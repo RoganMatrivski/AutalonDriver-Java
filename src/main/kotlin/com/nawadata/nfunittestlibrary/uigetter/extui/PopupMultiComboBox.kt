@@ -33,6 +33,12 @@ class PopupMultiComboBox (
         return this
     }
 
+    fun selectElementFromColumns(column: String): PopupMultiComboBox =
+        this.selectElementFromColumns(arrayOf(arrayOf(column)))
+
+    fun selectElementFromColumns(column: Array<String>): PopupMultiComboBox =
+        this.selectElementFromColumns(arrayOf(column))
+
     fun selectElementFromColumns(multiColumns: Array<Array<String>>): PopupMultiComboBox {
         val (uiGetter, elGetter) = Pair(driver.uiGetter().extUI(), driver.getElement())
 
@@ -49,10 +55,6 @@ class PopupMultiComboBox (
         elGetter.byXPath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input").untilElementInteractable()
 
         val filtersEl = driver.findElements(By.xpath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input"))
-
-        if (multiColumns.any { columns -> filtersEl.size != columns.size }) {
-            throw IllegalArgumentException("Some filter column count doesn't match the page filter count")
-        }
 
         for (columns in multiColumns) {
             for ((str, input) in columns.zip(filtersEl)) {
