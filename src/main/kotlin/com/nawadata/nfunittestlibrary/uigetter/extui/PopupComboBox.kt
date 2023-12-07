@@ -39,34 +39,45 @@ class PopupComboBox (
     fun selectElementFromColumns(columns: Array<String>): PopupComboBox {
         val (uiGetter, elGetter) = Pair(driver.uiGetter().extUI(), driver.getElement())
 
-        try {
-            elGetter.byXPath(windowXPath).untilElementVisible(2)
-        } catch (ex: TimeoutException) {
-            elGetter.byXPath("//*[@id = '$componentId-trigger-picker']").clickAwait()
-        }
+        var attempt = 0
 
-        // Wait until rows shows
-        elGetter.byXPath(windowXPath).untilElementVisible()
-        elGetter.byXPath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input").untilElementInteractable()
+        while (attempt < 2) {
+            println("Attempt #$attempt at filling PopupCombobox")
+            try {
+                try {
+                    elGetter.byXPath(windowXPath).untilElementVisible(2)
+                } catch (ex: TimeoutException) {
+                    elGetter.byXPath("//*[@id = '$componentId-trigger-picker']").clickAwait()
+                }
 
-        val filtersEl = driver.findElements(By.xpath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input"))
+                // Wait until rows shows
+                elGetter.byXPath(windowXPath).untilElementVisible()
+                elGetter.byXPath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input").untilElementInteractable()
 
-        for ((str, input) in columns.zip(filtersEl)) {
-            if (input.getAttribute("value").isNotEmpty()) {
-                val clearBtn = input.findElement(By.xpath("following::*[@class = 'x-clear-button']"))
-                driver.highlightElement(clearBtn)
+                val filtersEl = driver.findElements(By.xpath("$windowXPath/descendant::*[@role = 'columnheader']/descendant::input"))
 
-                Actions(driver).moveToElement(input).moveToElement(clearBtn).click().perform()
+                for ((str, input) in columns.zip(filtersEl)) {
+                    if (input.getAttribute("value").isNotEmpty()) {
+                        val clearBtn = input.findElement(By.xpath("following::*[@class = 'x-clear-button']"))
+                        driver.highlightElement(clearBtn)
+
+                        Actions(driver).moveToElement(input).moveToElement(clearBtn).click().perform()
+                    }
+
+                    driver.highlightElement(input)
+                    Actions(driver).moveToElement(input).click().sendKeys(str).perform()
+
+                    driver.uiGetter().extUI().getSpinnerAndWait(rootXPath = windowXPath)
+                }
+
+                val targetRowXPath = Tools.getPopupRowXpath(columns, windowXPath)
+                elGetter.byXPath(targetRowXPath).untilElementInteractable().highlightAndGetElement().click()
+
+                break
+            } catch (_: Exception) {
+                attempt += 1
             }
-
-            driver.highlightElement(input)
-            Actions(driver).moveToElement(input).click().sendKeys(str).perform()
-
-            driver.uiGetter().extUI().getSpinnerAndWait(rootXPath = windowXPath)
         }
-
-        val targetRowXPath = Tools.getPopupRowXpath(columns, windowXPath)
-        elGetter.byXPath(targetRowXPath).untilElementInteractable().highlightAndGetElement().click()
 
         return this
     }
