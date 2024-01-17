@@ -171,4 +171,22 @@ class ShouldBe(
             throw IncorrectTypeException("Input element is not a popup combobox", e)
         }
     }
+
+    /**
+     * Cast input into textbox input class.
+     *
+     * @return the textbox input class
+     * @throws IncorrectTypeException the incorrect type exception
+     */
+    @Throws(IncorrectTypeException::class)
+    fun asTimeTextbox(): TimeInput {
+        return try {
+            val textboxInputEl = element.findElement(
+                By.xpath("../input[@role='combobox'][@aria-owns]")
+            )
+            TimeInput(driver, textboxInputEl)
+        } catch (e: NoSuchElementException) {
+            throw IncorrectTypeException("Input element is not a textbox", e)
+        }
+    }
 }
